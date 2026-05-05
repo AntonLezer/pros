@@ -4,7 +4,19 @@ import { headers } from "next/headers";
 
 export type BookingResult =
   | { ok: true }
-  | { ok: false; error: string; fieldErrors?: { name?: string; phone?: string }; values?: { name: string; phone: string } };
+  | {
+      ok: false;
+      error: string;
+      fieldErrors?: { name?: string; phone?: string };
+      values?: {
+        name: string;
+        phone: string;
+        service?: string;
+        date?: string;
+        time?: string;
+        comment?: string;
+      };
+    };
 
 const RATE_LIMIT = 3;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
@@ -39,36 +51,36 @@ function isRateLimited(ip: string): boolean {
 
 export async function submitBooking(
   _prev: BookingResult | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<BookingResult> {
   const name = String(formData.get("name") ?? "");
   const phone = String(formData.get("phone") ?? "");
+  const service = String(formData.get("service") ?? "");
+  const date = String(formData.get("date") ?? "");
+  const time = String(formData.get("time") ?? "");
+  const comment = String(formData.get("comment") ?? "");
+
+  const values = { name, phone, service, date, time, comment };
 
   const fieldErrors = validate(name, phone);
   if (Object.keys(fieldErrors).length > 0) {
-    return {
-      ok: false,
-      error: "Перевірте поля форми",
-      fieldErrors,
-      values: { name, phone },
-    };
+    return { ok: false, error: "Перевірте поля форми", fieldErrors, values };
   }
 
   const h = await headers();
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip") ?? "unknown";
   if (isRateLimited(ip)) {
-    return {
-      ok: false,
-      error: "Забагато спроб. Спробуйте за кілька хвилин.",
-      values: { name, phone },
-    };
+    return { ok: false, error: "Забагато спроб. Спробуйте за кілька хвилин.", values };
   }
 
-  // TODO: wire delivery (email or Telegram) when credentials are provided.
   console.log("[booking]", {
     ts: new Date().toISOString(),
     name: name.trim(),
     phone: digitsOnly(phone),
+    service: service || undefined,
+    date: date || undefined,
+    time: time || undefined,
+    comment: comment.trim() || undefined,
   });
 
   return { ok: true };

@@ -1,28 +1,45 @@
 import { services } from "@/data/services";
-import MotionLi from "./motion-li";
+
+const priceFormatter = new Intl.NumberFormat("uk-UA");
 
 export default function Services() {
   return (
-    <section id="services" aria-labelledby="services-h2" className="py-12 md:py-20">
-      <div className="mx-auto w-full max-w-md px-4 md:max-w-6xl md:px-8">
-        <h2 id="services-h2" className="text-center text-2xl font-semibold text-ink md:text-3xl">
-          Наші послуги
-        </h2>
-        <div className="mx-auto mt-2 h-0.5 w-12 rounded-full bg-brand" aria-hidden="true" />
-
-        <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
-            <MotionLi
-              key={s.id}
-              index={i}
-              className="rounded-xl border border-rule bg-surface p-5"
+    <section id="services" aria-labelledby="services-h2" className="bg-surface py-16 md:py-[100px]">
+      <div className="mx-auto max-w-[1200px] px-5 md:px-8">
+        <header className="mb-10 flex flex-col items-start justify-between gap-6 md:mb-14 md:flex-row md:items-end">
+          <div>
+            <p className="text-[13px] font-semibold uppercase tracking-[1.5px] text-accent">
+              Що ми лікуємо
+            </p>
+            <h2
+              id="services-h2"
+              className="mt-3 font-display text-[clamp(22px,2.8vw,40px)] font-bold leading-tight tracking-tight text-dark"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-tint text-brand">
-                <s.Icon className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <h3 className="mt-4 text-lg font-semibold text-ink">{s.name}</h3>
-              <p className="mt-2 text-sm text-ink-muted">{s.description}</p>
-            </MotionLi>
+              Наші послуги
+            </h2>
+          </div>
+          <p className="max-w-[560px] text-[16px] leading-relaxed text-muted">
+            Повний спектр стоматологічних послуг для всієї родини — від дітей до людей похилого віку.
+          </p>
+        </header>
+
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {services.map((s) => (
+            <li
+              key={s.id}
+              className="rounded-[20px] border border-transparent bg-cream p-7 transition-all hover:-translate-y-1 hover:border-accent/15 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] md:p-8"
+            >
+              <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-accent text-white">
+                <s.Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
+              </div>
+              <h3 className="mb-2 font-display text-[15px] font-semibold leading-snug text-dark">
+                {s.name}
+              </h3>
+              <p className="text-[14px] leading-relaxed text-muted">{s.description}</p>
+              <p className="mt-4 text-[14px] font-semibold text-accent">
+                від {priceFormatter.format(s.priceFrom)} грн
+              </p>
+            </li>
           ))}
         </ul>
       </div>

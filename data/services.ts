@@ -10,44 +10,57 @@ export type Service = {
   id: string;
   name: string;
   description: string;
+  priceFrom: number;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
 };
 
 export const services: Service[] = [
   {
     id: "therapy",
-    name: "Лікування зубів",
-    description: "Терапевтичне лікування карієсу та його ускладнень",
+    name: "Терапевтична стоматологія",
+    description:
+      "Лікування карієсу, пульпіту та інших захворювань зубів з використанням сучасних матеріалів.",
+    priceFrom: 600,
     Icon: ToothIcon,
   },
   {
-    id: "hygiene",
-    name: "Професійна гігієна",
-    description: "Комплексне чищення та профілактика захворювань ясен",
-    Icon: ShieldCheckIcon,
+    id: "aesthetic",
+    name: "Естетична стоматологія",
+    description:
+      "Відбілювання, вініри та реставрація для бездоганної посмішки, яка вас надихатиме.",
+    priceFrom: 1500,
+    Icon: DropletIcon,
   },
   {
     id: "braces",
-    name: "Брекети",
-    description: "Вирівнювання прикусу та естетика вашої усмішки",
+    name: "Ортодонтія",
+    description:
+      "Виправлення прикусу та вирівнювання зубів — брекети та прозорі елайнери для дітей і дорослих.",
+    priceFrom: 8000,
     Icon: BracesIcon,
   },
   {
     id: "implants",
-    name: "Імплантація",
-    description: "Відновлення зубів імплантами під ключ",
+    name: "Хірургія та імплантація",
+    description:
+      "Безболісне видалення зубів та імплантація з гарантією на встановлені конструкції.",
+    priceFrom: 15000,
     Icon: ImplantIcon,
-  },
-  {
-    id: "whitening",
-    name: "Відбілювання",
-    description: "Безпечне освітлення емалі та видалення пігментації",
-    Icon: DropletIcon,
   },
   {
     id: "pediatric",
     name: "Дитяча стоматологія",
-    description: "Турбота та безболісне лікування для найменших",
+    description:
+      "Бережний підхід до маленьких пацієнтів. Лікуємо без страху та болю в ігровій атмосфері.",
+    priceFrom: 400,
     Icon: BabyToothIcon,
+  },
+  {
+    id: "prosthetics",
+    name: "Протезування",
+    description:
+      "Знімні та незнімні протези, коронки та мости — відновимо зубний ряд природньо і комфортно.",
+    priceFrom: 5000,
+    Icon: ShieldCheckIcon,
   },
 ];

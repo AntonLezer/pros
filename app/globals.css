@@ -1,26 +1,52 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
-  --color-brand: #C97B3F;
-  --color-brand-dark: #A85F2C;
-  --color-brand-tint: #FBF1E8;
-  --color-brand-tint-strong: #F5D9BF;
-  --color-ink: #1F2937;
-  --color-ink-muted: #6B7280;
+  --color-accent: #E07B39;
+  --color-accent-light: #F5A96A;
+  --color-accent-dark: #C4641E;
+  --color-cream: #FBF7F2;
+  --color-cream-2: #F3EDE4;
+  --color-dark: #1C1C1E;
+  --color-text: #3A3A3C;
+  --color-muted: #8A8A8E;
   --color-surface: #FFFFFF;
-  --color-surface-alt: #FAF8F5;
-  --color-rule: #E5E7EB;
 
-  --font-sans: var(--font-onest);
+  /* Backwards-compat aliases for hero structure (preserved) */
+  --color-brand: #E07B39;
+  --color-brand-dark: #C4641E;
+  --color-brand-tint: #FBF1E8;
+  --color-ink: #1C1C1E;
+  --color-ink-muted: #8A8A8E;
+  --color-surface-alt: #FBF7F2;
+  --color-rule: #F3EDE4;
+
+  --radius-card: 20px;
+  --radius-input: 10px;
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+
+  --animate-accordion-down: accordion-down 0.25s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 
 html {
-  background: var(--color-surface-alt);
-  color: var(--color-ink);
+  background: var(--color-cream);
+  color: var(--color-text);
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body), sans-serif;
 }
 
 @media (prefers-reduced-motion: no-preference) {

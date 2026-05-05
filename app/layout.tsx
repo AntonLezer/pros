@@ -1,12 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Onest } from "next/font/google";
+import { Unbounded, Inter } from "next/font/google";
 import "./globals.css";
 import { contacts } from "@/data/contacts";
 import { services } from "@/data/services";
 
-const onest = Onest({
+const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-onest",
+  weight: ["400", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -15,7 +23,7 @@ const SITE_NAME = "Центр Плоскирів";
 const CITY = "Хмельницький";
 const TITLE = `Стоматологія у Хмельницькому — ${SITE_NAME}: лікування, імплантація, брекети`;
 const DESCRIPTION =
-  "Стоматологічна клініка «Центр Плоскирів» у Хмельницькому: терапевтичне лікування, імплантація, брекети, відбілювання, дитяча стоматологія. Запис на прийом за телефоном.";
+  "Стоматологічна клініка «Центр Плоскирів» у Хмельницькому: терапевтичне лікування, імплантація, брекети, відбілювання, дитяча стоматологія. Запис на консультацію за телефоном.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -66,7 +74,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#C97B3F",
+  themeColor: "#E07B39",
   width: "device-width",
   initialScale: 1,
 };
@@ -115,8 +123,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" className={`${onest.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+    <html lang="uk" className={`${unbounded.variable} ${inter.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-cream font-sans text-text">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

@@ -1,68 +1,48 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { heroFeatures } from "@/data/features";
 import { contacts } from "@/data/contacts";
 import MotionFade from "./motion-fade";
-
-const HERO_IMAGE = "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1200&q=80";
+import BannerSlider from "./banner-slider";
 
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-h1" className="bg-surface-alt">
-      <div className="mx-auto w-full max-w-md px-4 pt-6 pb-10 md:max-w-6xl md:px-8 md:py-16 md:grid md:grid-cols-2 md:gap-10 md:items-center">
-        <MotionFade>
-          <span className="inline-block rounded-full bg-brand-tint px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-brand-dark">
-            Сучасна стоматологія у Хмельницькому
-          </span>
-          <h1 id="hero-h1" className="mt-4 text-3xl font-semibold leading-tight text-ink md:text-5xl md:leading-tight">
-            Лікуємо зуби<br />з турботою про вас
-          </h1>
-          <p className="mt-4 text-ink-muted md:text-lg">
-            Комплексний підхід, новітні технології та комфорт на кожному етапі лікування.
-          </p>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="#booking-form"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-6 text-base font-medium text-surface transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+    <section aria-labelledby="hero-h1" className="bg-cream-2">
+      <BannerSlider>
+        <MotionFade className="mx-auto w-full max-w-md px-4 pb-8 md:max-w-[1200px] md:px-8 md:pb-0">
+          <div className="md:max-w-xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-cream-2/95 px-4 py-2 text-[13px] font-semibold uppercase tracking-wider text-accent">
+              <span aria-hidden="true">★</span>
+              Хмельницький · Стоматологія
+            </span>
+            <h1
+              id="hero-h1"
+              className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-[52px] md:leading-[1.05]"
             >
-              Записатися на прийом
-            </Link>
-            <a
-              href={contacts.phoneHref}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-rule bg-surface px-6 text-base font-medium text-ink transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-            >
-              <Phone className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
-              Подзвонити
-            </a>
-          </div>
+              Ваша <em className="not-italic text-accent-light">здорова</em> посмішка<br />— наша турбота
+            </h1>
+            <p className="mt-5 max-w-md text-base leading-relaxed text-white/85 md:text-[17px]">
+              Сучасна стоматологія з індивідуальним підходом. Лікуємо без болю, працюємо з любов&apos;ю до кожного пацієнта.
+            </p>
 
-          <ul className="mt-8 grid grid-cols-3 gap-3 md:mt-10 md:gap-6">
-            {heroFeatures.map((f) => (
-              <li key={f.id} className="flex flex-col items-start gap-2 text-xs text-ink-muted md:text-sm">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-tint text-brand">
-                  <f.Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
-                </span>
-                {f.label}
-              </li>
-            ))}
-          </ul>
-        </MotionFade>
-
-        <MotionFade className="mt-8 md:mt-0" delay={0.1}>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-brand-tint">
-            <Image
-              src={HERO_IMAGE}
-              alt="Команда лікарів стоматології Центр Плоскирів у Хмельницькому"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 600px"
-              className="object-cover"
-            />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="#booking"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-[15px] font-semibold text-white transition-all hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              >
+                Записатись на прийом
+              </Link>
+              <a
+                href={contacts.phoneHref}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border-2 border-white/70 bg-white/10 px-6 text-[15px] font-semibold text-white backdrop-blur transition-colors hover:border-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              >
+                <Phone className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                Подзвонити
+              </a>
+            </div>
           </div>
         </MotionFade>
-      </div>
+      </BannerSlider>
     </section>
   );
 }

@@ -2,19 +2,28 @@
 
 import { useActionState } from "react";
 import { submitBooking, type BookingResult } from "../_actions/booking";
+import { services } from "@/data/services";
+
+const inputBase =
+  "w-full rounded-[10px] border-[1.5px] border-cream-2 bg-cream px-4 py-3.5 text-[14px] text-dark placeholder:text-muted/60 transition-colors focus:border-accent focus:bg-white focus:outline-none";
 
 export default function BookingForm() {
-  const [state, formAction, pending] = useActionState<BookingResult | null, FormData>(submitBooking, null);
+  const [state, formAction, pending] = useActionState<BookingResult | null, FormData>(
+    submitBooking,
+    null,
+  );
 
   if (state?.ok) {
     return (
-      <div className="rounded-xl bg-surface p-6 text-center text-ink ring-1 ring-rule">
-        <p className="text-lg font-semibold">Дякуємо!</p>
-        <p className="mt-2 text-sm text-ink-muted">Ми зв&apos;яжемося з вами найближчим часом.</p>
+      <div className="rounded-[20px] bg-surface p-10 text-center">
+        <p className="font-display text-xl font-bold text-dark">Дякуємо!</p>
+        <p className="mt-3 text-[15px] leading-relaxed text-muted">
+          Ваша заявка отримана — ми зв&apos;яжемося з вами протягом 15 хвилин.
+        </p>
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-rule bg-surface px-4 text-sm font-medium text-ink transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+          className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-[14px] font-semibold text-white transition-colors hover:bg-accent-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           Надіслати ще одну заявку
         </button>
@@ -25,68 +34,133 @@ export default function BookingForm() {
   const nameError = state && !state.ok ? state.fieldErrors?.name : undefined;
   const phoneError = state && !state.ok ? state.fieldErrors?.phone : undefined;
   const generalError = state && !state.ok ? state.error : undefined;
-  const initialName = state && !state.ok ? state.values?.name ?? "" : "";
-  const initialPhone = state && !state.ok ? state.values?.phone ?? "" : "";
+  const v = state && !state.ok ? state.values : undefined;
 
   return (
-    <form action={formAction} className="grid gap-3" noValidate>
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-ink">
-          Ваше ім&apos;я
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required
-          minLength={2}
-          autoComplete="name"
-          defaultValue={initialName}
-          aria-invalid={Boolean(nameError) || undefined}
-          aria-describedby={nameError ? "name-error" : undefined}
-          className="mt-1 block h-12 w-full rounded-md border border-rule bg-surface px-3 text-base text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
-          placeholder="Олена"
-        />
-        {nameError && (
-          <p id="name-error" className="mt-1 text-sm text-red-700">
-            {nameError}
-          </p>
-        )}
+    <form
+      action={formAction}
+      noValidate
+      className="rounded-[20px] bg-surface p-8 md:p-10"
+    >
+      <h3 className="mb-6 font-display text-[18px] font-bold text-dark">Форма запису</h3>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="name" className="text-[13px] font-medium text-text">
+            Ваше ім&apos;я *
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            minLength={2}
+            autoComplete="name"
+            placeholder="Ольга Іваненко"
+            defaultValue={v?.name ?? ""}
+            aria-invalid={Boolean(nameError) || undefined}
+            aria-describedby={nameError ? "name-error" : undefined}
+            className={inputBase}
+          />
+          {nameError && (
+            <p id="name-error" className="text-[12px] text-red-600">
+              {nameError}
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="phone" className="text-[13px] font-medium text-text">
+            Телефон *
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel"
+            inputMode="tel"
+            placeholder="+380 68 123 4567"
+            defaultValue={v?.phone ?? ""}
+            aria-invalid={Boolean(phoneError) || undefined}
+            aria-describedby={phoneError ? "phone-error" : undefined}
+            className={inputBase}
+          />
+          {phoneError && (
+            <p id="phone-error" className="text-[12px] text-red-600">
+              {phoneError}
+            </p>
+          )}
+        </div>
       </div>
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-ink">
-          Телефон
+
+      <div className="mt-3 flex flex-col gap-1.5">
+        <label htmlFor="service" className="text-[13px] font-medium text-text">
+          Послуга
         </label>
-        <input
-          id="phone"
-          name="phone"
-          type="tel"
-          required
-          autoComplete="tel"
-          inputMode="tel"
-          defaultValue={initialPhone}
-          aria-invalid={Boolean(phoneError) || undefined}
-          aria-describedby={phoneError ? "phone-error" : undefined}
-          className="mt-1 block h-12 w-full rounded-md border border-rule bg-surface px-3 text-base text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
-          placeholder="+380 68 123 4567"
-        />
-        {phoneError && (
-          <p id="phone-error" className="mt-1 text-sm text-red-700">
-            {phoneError}
-          </p>
-        )}
+        <select id="service" name="service" defaultValue={v?.service ?? ""} className={inputBase}>
+          <option value="">Оберіть послугу</option>
+          {services.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
+          ))}
+        </select>
       </div>
+
+      <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="date" className="text-[13px] font-medium text-text">
+            Дата
+          </label>
+          <input
+            id="date"
+            name="date"
+            type="date"
+            defaultValue={v?.date ?? ""}
+            className={inputBase}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="time" className="text-[13px] font-medium text-text">
+            Час
+          </label>
+          <input
+            id="time"
+            name="time"
+            type="time"
+            defaultValue={v?.time ?? "10:00"}
+            className={inputBase}
+          />
+        </div>
+      </div>
+
+      <div className="mt-3 flex flex-col gap-1.5">
+        <label htmlFor="comment" className="text-[13px] font-medium text-text">
+          Коментар
+        </label>
+        <textarea
+          id="comment"
+          name="comment"
+          rows={3}
+          placeholder="Ваше питання або скарга..."
+          defaultValue={v?.comment ?? ""}
+          className={`${inputBase} resize-y`}
+        />
+      </div>
+
       {generalError && !nameError && !phoneError && (
-        <p className="text-sm text-red-700" role="alert">
+        <p className="mt-3 text-[13px] text-red-600" role="alert">
           {generalError}
         </p>
       )}
+
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex h-12 items-center justify-center rounded-full bg-brand px-6 text-base font-medium text-surface transition-colors hover:bg-brand-dark disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+        className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[15px] font-semibold text-white transition-all hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.3)] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
-        {pending ? "Надсилаємо..." : "Записатися"}
+        {pending ? "Надсилаємо..." : "Записатись на прийом"}
       </button>
     </form>
   );
