@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" role="img">
+  <title>До та після лікування</title>
+  <defs>
+    <linearGradient id="bgBefore" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4D8C0"/>
+      <stop offset="1" stop-color="#E2B58E"/>
+    </linearGradient>
+    <linearGradient id="bgAfter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE9D6"/>
+      <stop offset="1" stop-color="#F5C9A1"/>
+    </linearGradient>
+    <radialGradient id="toothShadow" cx="0.5" cy="0.95" r="0.6">
+      <stop offset="0" stop-color="#000" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="400" height="600" fill="url(#bgBefore)"/>
+  <rect x="400" y="0" width="400" height="600" fill="url(#bgAfter)"/>
+  <!-- before teeth (slight yellow tint, uneven) -->
+  <g transform="translate(80,160)">
+    <rect x="0" y="0" width="40" height="120" rx="10" fill="#EBD5A6"/>
+    <rect x="50" y="-10" width="42" height="130" rx="10" fill="#E8CC95"/>
+    <rect x="100" y="0" width="40" height="120" rx="10" fill="#E8CC95"/>
+    <rect x="148" y="6" width="40" height="118" rx="10" fill="#EAD3A2"/>
+    <rect x="196" y="-2" width="42" height="124" rx="10" fill="#E5C58A"/>
+    <rect x="246" y="2" width="40" height="120" rx="10" fill="#EBD5A6"/>
+  </g>
+  <ellipse cx="200" cy="380" rx="170" ry="22" fill="url(#toothShadow)"/>
+  <!-- after teeth (whiter, even) -->
+  <g transform="translate(480,160)">
+    <rect x="0" y="0" width="40" height="120" rx="10" fill="#FBF8F2"/>
+    <rect x="48" y="0" width="42" height="120" rx="10" fill="#FFFFFF"/>
+    <rect x="96" y="0" width="40" height="120" rx="10" fill="#FBF8F2"/>
+    <rect x="142" y="0" width="40" height="120" rx="10" fill="#FFFFFF"/>
+    <rect x="188" y="0" width="42" height="120" rx="10" fill="#FBF8F2"/>
+    <rect x="238" y="0" width="40" height="120" rx="10" fill="#FFFFFF"/>
+  </g>
+  <ellipse cx="600" cy="380" rx="170" ry="22" fill="url(#toothShadow)"/>
+</svg>

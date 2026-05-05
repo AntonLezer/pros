@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" role="img">
+  <title>Карта розташування</title>
+  <rect x="0" y="0" width="800" height="400" fill="#EAEFE7"/>
+  <!-- pale park polygon -->
+  <path d="M40 40 L260 30 L300 180 L80 220 Z" fill="#D6E2CB"/>
+  <!-- streets -->
+  <g stroke="#FFFFFF" stroke-width="14" stroke-linecap="round">
+    <line x1="0" y1="120" x2="800" y2="100"/>
+    <line x1="0" y1="260" x2="800" y2="280"/>
+    <line x1="180" y1="0" x2="220" y2="400"/>
+    <line x1="540" y1="0" x2="500" y2="400"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-width="6" stroke-linecap="round">
+    <line x1="0" y1="60" x2="800" y2="50"/>
+    <line x1="0" y1="340" x2="800" y2="360"/>
+    <line x1="350" y1="0" x2="370" y2="400"/>
+    <line x1="660" y1="0" x2="640" y2="400"/>
+  </g>
+  <!-- pin -->
+  <g transform="translate(440,180)">
+    <path d="M0 0 C-20 0 -36 16 -36 36 C-36 60 0 96 0 96 C0 96 36 60 36 36 C36 16 20 0 0 0 Z" fill="#C97B3F"/>
+    <circle cx="0" cy="32" r="12" fill="#FFFFFF"/>
+  </g>
+</svg>
