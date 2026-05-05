@@ -39,7 +39,7 @@ export default function BannerSlider({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="relative aspect-[4/5] max-h-screen w-full overflow-hidden md:aspect-[3/2] md:min-h-[600px]"
+      className="relative h-[calc(100vh-69px)] lg:h-[calc(100dvh-14px)] w-full overflow-hidden md:h-auto md:aspect-[3/2] md:min-h-[600px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -62,6 +62,7 @@ export default function BannerSlider({ children }: { children: ReactNode }) {
             fill
             priority={i === 0}
             sizes="100vw"
+            quality={90}
             className="object-cover object-top md:object-center"
           />
         </div>

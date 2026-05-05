@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
-import { heroFeatures } from "@/data/features";
 import { contacts } from "@/data/contacts";
 import MotionFade from "./motion-fade";
 import BannerSlider from "./banner-slider";
@@ -11,7 +10,7 @@ export default function Hero() {
       <BannerSlider>
         <MotionFade className="mx-auto w-full max-w-md px-4 pb-8 md:max-w-[1200px] md:px-8 md:pb-0">
           <div className="md:max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-cream-2/95 px-4 py-2 text-[13px] font-semibold uppercase tracking-wider text-accent">
+            <span className="inline-flex invisible md:visible items-center gap-2 rounded-full border border-accent/20 bg-cream-2/95 px-4 py-2 text-[13px] font-semibold uppercase tracking-wider text-accent">
               <span aria-hidden="true">★</span>
               Хмельницький · Стоматологія
             </span>

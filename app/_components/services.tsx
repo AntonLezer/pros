@@ -23,11 +23,11 @@ export default function Services() {
           </p>
         </header>
 
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <ul className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 md:grid-cols-3">
           {services.map((s) => (
             <li
               key={s.id}
-              className="rounded-[20px] border border-transparent bg-cream p-7 transition-all hover:-translate-y-1 hover:border-accent/15 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] md:p-8"
+              className="min-w-[85%] shrink-0 snap-start rounded-[20px] border border-transparent bg-cream p-7 transition-all hover:-translate-y-1 hover:border-accent/15 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] sm:min-w-0 sm:shrink md:p-8"
             >
               <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-accent text-white">
                 <s.Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
