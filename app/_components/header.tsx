@@ -64,7 +64,7 @@ export default function Header() {
           </ul>
           <Link
             href="#booking"
-            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-px hover:bg-accent-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-[transform,background-color] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             Записатись
           </Link>
@@ -98,7 +98,7 @@ export default function Header() {
             <SheetClose asChild>
               <Link
                 href="#booking"
-                className="mt-6 block w-full rounded-full bg-accent py-3.5 text-center text-[15px] font-semibold text-white transition-colors hover:bg-accent-dark"
+                className="mt-6 block w-full rounded-full bg-accent py-3.5 text-center text-[15px] font-semibold text-white transition-[transform,background-color] duration-200 ease-out hover:bg-accent-dark active:scale-[0.97]"
               >
                 Записатись на прийом
               </Link>

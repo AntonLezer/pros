@@ -172,13 +172,13 @@ export default function Hero() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="#booking"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-[15px] font-semibold text-white transition-all hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-[15px] font-semibold text-white transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.35)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
                 >
                   Записатись на прийом
                 </Link>
                 <a
                   href={contacts.phoneHref}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border-2 border-white/70 bg-white/10 px-6 text-[15px] font-semibold text-white backdrop-blur transition-colors hover:border-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border-2 border-white/70 bg-white/10 px-6 text-[15px] font-semibold text-white backdrop-blur transition-[transform,background-color,border-color] duration-200 ease-out hover:border-accent hover:bg-accent active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                 >
                   <Phone className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
                   Подзвонити
@@ -201,7 +201,7 @@ export default function Hero() {
               aria-selected={i === active}
               aria-label={`Слайд ${i + 1} з ${SLIDES.length}`}
               onClick={() => setActive(i)}
-              className={`rounded transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-surface focus-visible:ring-offset-2 focus-visible:ring-offset-black/0 ${
+              className={`rounded transition-[transform,color] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-surface focus-visible:ring-offset-2 focus-visible:ring-offset-black/0 ${
                 i === active
                   ? "scale-110 font-semibold text-surface"
                   : "text-surface/55 hover:text-surface/85"

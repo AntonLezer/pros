@@ -23,7 +23,7 @@ export default function BookingForm() {
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-[14px] font-semibold text-white transition-colors hover:bg-accent-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-[14px] font-semibold text-white transition-[transform,background-color] duration-200 ease-out hover:bg-accent-dark active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           Надіслати ще одну заявку
         </button>
@@ -158,7 +158,7 @@ export default function BookingForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[15px] font-semibold text-white transition-all hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.3)] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[15px] font-semibold text-white transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.3)] active:scale-[0.97] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
         {pending ? "Надсилаємо..." : "Записатись на прийом"}
       </button>

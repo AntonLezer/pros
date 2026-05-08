@@ -27,7 +27,7 @@ const AccordionTrigger = forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "group flex flex-1 items-center justify-between gap-4 py-5 text-left text-[15px] font-medium leading-snug text-dark transition-all",
+        "group flex flex-1 items-center justify-between gap-4 py-5 text-left text-[15px] font-medium leading-snug text-dark transition-colors duration-200 ease-out",
         className,
       )}
       {...props}
@@ -35,7 +35,7 @@ const AccordionTrigger = forwardRef<
       <span>{children}</span>
       <span
         aria-hidden="true"
-        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cream-2 text-accent transition-all duration-200 group-data-[state=open]:rotate-45 group-data-[state=open]:bg-accent group-data-[state=open]:text-white"
+        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cream-2 text-accent transition-[transform,background-color,color] duration-200 ease-out group-data-[state=open]:rotate-45 group-data-[state=open]:bg-accent group-data-[state=open]:text-white"
       >
         <Plus className="h-4 w-4" strokeWidth={2.25} />
       </span>

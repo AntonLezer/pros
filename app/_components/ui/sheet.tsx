@@ -34,7 +34,7 @@ const SheetContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-y-0 right-0 z-[201] flex h-full w-[300px] flex-col gap-0 bg-white p-8 shadow-[-8px_0_32px_rgba(0,0,0,0.12)] transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=open]:duration-300",
+        "fixed inset-y-0 right-0 z-[201] flex h-full w-[300px] flex-col gap-0 bg-white p-8 shadow-[-8px_0_32px_rgba(0,0,0,0.12)] transition-transform ease-out data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=closed]:duration-200 data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=open]:duration-300",
         className,
       )}
       {...props}

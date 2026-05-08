@@ -71,7 +71,7 @@ export default function Reviews() {
               onClick={() => move(-1)}
               disabled={atStart}
               aria-label="Попередній відгук"
-              className="grid h-12 w-12 place-items-center rounded-full border-2 border-cream-2 bg-cream text-text transition-all enabled:hover:border-accent enabled:hover:bg-accent enabled:hover:text-white disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="grid h-12 w-12 place-items-center rounded-full border-2 border-cream-2 bg-cream text-text transition-[transform,background-color,border-color,color,opacity] duration-200 ease-out enabled:hover:border-accent enabled:hover:bg-accent enabled:hover:text-white enabled:active:scale-[0.94] disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <ArrowLeft className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
             </button>
@@ -80,7 +80,7 @@ export default function Reviews() {
               onClick={() => move(1)}
               disabled={atEnd}
               aria-label="Наступний відгук"
-              className="grid h-12 w-12 place-items-center rounded-full border-2 border-cream-2 bg-cream text-text transition-all enabled:hover:border-accent enabled:hover:bg-accent enabled:hover:text-white disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="grid h-12 w-12 place-items-center rounded-full border-2 border-cream-2 bg-cream text-text transition-[transform,background-color,border-color,color,opacity] duration-200 ease-out enabled:hover:border-accent enabled:hover:bg-accent enabled:hover:text-white enabled:active:scale-[0.94] disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <ArrowRight className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
             </button>

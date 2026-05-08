@@ -26,7 +26,7 @@ export default function Doctors() {
 
         <ul className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {doctors.map((d) => (
-            <li key={d.id} className="overflow-hidden rounded-[20px] bg-surface transition-all hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)]">
+            <li key={d.id} className="overflow-hidden rounded-[20px] bg-surface transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)]">
               <div className="relative aspect-[3/4] bg-cream-2">
                 {d.image ? (
                   <Image
