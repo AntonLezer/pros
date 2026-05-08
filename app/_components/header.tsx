@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Clock, MapPin, Menu, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,14 +17,26 @@ const DRAWER_ITEMS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-function Logo({ size = 18 }: { size?: number }) {
+function Logo({ size = 18, imageSize = 38 }: { size?: number; imageSize?: number }) {
   return (
     <Link
       href="/"
-      className="font-display font-bold tracking-tight text-dark"
+      aria-label="Центр Плоскирів — головна"
+      className="inline-flex items-center gap-2.5 font-display font-bold tracking-tight text-dark"
       style={{ fontSize: `${size}px`, letterSpacing: "-0.5px" }}
     >
-      Плоски<span className="text-accent">рів</span>
+      <Image
+        src="/logo/logo.png"
+        alt=""
+        width={imageSize}
+        height={imageSize}
+        priority
+        className="shrink-0 object-contain"
+        style={{ width: imageSize, height: imageSize }}
+      />
+      <span>
+        Плоски<span className="text-accent">рів</span>
+      </span>
     </Link>
   );
 }

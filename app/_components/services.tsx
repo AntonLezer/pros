@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { services } from "@/data/services";
 
 const priceFormatter = new Intl.NumberFormat("uk-UA");
@@ -27,18 +29,31 @@ export default function Services() {
           {services.map((s) => (
             <li
               key={s.id}
-              className="min-w-[85%] shrink-0 snap-start rounded-[20px] border border-transparent bg-cream p-7 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-accent/15 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] sm:min-w-0 sm:shrink md:p-8"
+              className="group min-w-[85%] shrink-0 snap-start rounded-[20px] border border-transparent bg-cream transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-accent/15 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] sm:min-w-0 sm:shrink"
             >
-              <div className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-accent text-white">
-                <s.Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
-              </div>
-              <h3 className="mb-2 font-display text-[15px] font-semibold leading-snug text-dark">
-                {s.name}
-              </h3>
-              <p className="text-[14px] leading-relaxed text-muted">{s.description}</p>
-              <p className="mt-4 text-[14px] font-semibold text-accent">
-                від {priceFormatter.format(s.priceFrom)} грн
-              </p>
+              <Link
+                href={`/poslugy/${s.slug}`}
+                className="block h-full p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 md:p-8"
+                aria-label={`${s.name} — детальніше`}
+              >
+                <div className="mb-5 flex items-start justify-between">
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-accent text-white">
+                    <s.Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
+                  </div>
+                  <ArrowUpRight
+                    className="h-5 w-5 text-muted/40 transition-[transform,color] duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </div>
+                <h3 className="mb-2 font-display text-[15px] font-semibold leading-snug text-dark">
+                  {s.name}
+                </h3>
+                <p className="text-[14px] leading-relaxed text-muted">{s.description}</p>
+                <p className="mt-4 text-[14px] font-semibold text-accent">
+                  від {priceFormatter.format(s.priceFrom)} грн
+                </p>
+              </Link>
             </li>
           ))}
         </ul>

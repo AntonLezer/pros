@@ -1,4 +1,3 @@
-import Header from "./_components/header";
 import Hero from "./_components/hero";
 import Services from "./_components/services";
 import BeforeAfter from "./_components/before-after";
@@ -8,24 +7,19 @@ import Doctors from "./_components/doctors";
 import Booking from "./_components/booking";
 import Faq from "./_components/faq";
 import Contacts from "./_components/contacts";
-import Footer from "./_components/footer";
 
 export default function Home() {
   return (
     <>
-      <Header />
-      <main id="top" className="flex-1">
-        <Hero />
-        <Services />
-        <BeforeAfter />
-        <WhyUs />
-        <Reviews />
-        <Doctors />
-        <Booking />
-        <Faq />
-        <Contacts />
-      </main>
-      <Footer />
+      <Hero />
+      <Services />
+      <BeforeAfter />
+      <WhyUs />
+      <Reviews />
+      <Doctors />
+      <Booking />
+      <Faq />
+      <Contacts />
     </>
   );
 }
