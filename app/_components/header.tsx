@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { Clock, MapPin, Menu, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { contacts } from "@/data/contacts";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 
-const NAV_ITEMS = [
+const DRAWER_ITEMS = [
   { href: "#services", label: "Послуги" },
   { href: "#before-after", label: "До/Після" },
   { href: "#doctors", label: "Лікарі" },
   { href: "#reviews", label: "Відгуки" },
   { href: "#contacts", label: "Контакти" },
+  { href: "#faq", label: "FAQ" },
 ];
-
-const DRAWER_ITEMS = [...NAV_ITEMS, { href: "#faq", label: "FAQ" }];
 
 function Logo({ size = 18 }: { size?: number }) {
   return (
@@ -46,29 +46,35 @@ export default function Header() {
         scrolled && "shadow-[0_4px_24px_rgba(0,0,0,0.08)]",
       )}
     >
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-4 md:px-8">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-5 py-4 md:px-8">
         <Logo />
 
-        <nav aria-label="Основна навігація" className="hidden items-center gap-8 md:flex">
-          <ul className="flex gap-8">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm font-medium text-text transition-colors hover:text-accent"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="hidden items-center gap-7 text-sm text-text lg:flex">
+          <span className="inline-flex items-center gap-2">
+            <Clock className="h-4 w-4 text-accent" strokeWidth={2.25} aria-hidden="true" />
+            <span>{contacts.hours.weekdays}</span>
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-accent" strokeWidth={2.25} aria-hidden="true" />
+            <span>{contacts.address.line2}</span>
+          </span>
+        </div>
+
+        <div className="hidden items-center gap-6 md:flex">
+          <a
+            href={contacts.phoneHref}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-dark transition-colors duration-200 ease-out hover:text-accent"
+          >
+            <Phone className="h-4 w-4 text-accent" strokeWidth={2.25} aria-hidden="true" />
+            {contacts.phone}
+          </a>
           <Link
             href="#booking"
             className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-[transform,background-color] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             Записатись
           </Link>
-        </nav>
+        </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger

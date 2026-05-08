@@ -3,7 +3,7 @@ export type Contacts = {
   phone: string;
   phoneHref: string;
   hours: { weekdays: string; saturday: string };
-  socials: { instagram: string; facebook: string };
+  socials: { instagram: string };
   mapDirectionsHref: string;
 };
 
@@ -20,8 +20,7 @@ export const contacts: Contacts = {
     saturday: "Сб: за домовленістю",
   },
   socials: {
-    instagram: "#",
-    facebook: "#",
+    instagram: "https://www.instagram.com/stomat_ploskiriv/",
   },
   mapDirectionsHref:
     "https://www.google.com/maps/dir/?api=1&destination=" +
