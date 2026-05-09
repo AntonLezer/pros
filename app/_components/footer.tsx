@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { contacts } from "@/data/contacts";
 
 function InstagramIcon({ className }: { className?: string }) {
@@ -23,10 +24,21 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6">
         <Link
           href="/"
-          className="font-display text-[16px] font-bold text-white"
+          aria-label="Центр Плоскирів — головна"
+          className="inline-flex items-center gap-2.5 font-display text-[16px] font-bold text-white"
           style={{ letterSpacing: "-0.5px" }}
         >
-          Плоски<span className="text-accent">рів</span>
+          <Image
+            src="/logo/logo.png"
+            alt=""
+            width={32}
+            height={32}
+            className="shrink-0 object-contain"
+            style={{ width: 32, height: 32 }}
+          />
+          <span>
+            Плоски<span className="text-accent">рів</span>
+          </span>
         </Link>
 
         <p className="text-[13px] text-white/35">
