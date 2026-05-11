@@ -108,31 +108,17 @@ export default function BookingForm() {
         </select>
       </div>
 
-      <div className="mt-3 grid gap-3 md:grid-cols-2">
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="date" className="text-[13px] font-medium text-text">
-            Дата
-          </label>
-          <input
-            id="date"
-            name="date"
-            type="date"
-            defaultValue={v?.date ?? ""}
-            className={inputBase}
-          />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="time" className="text-[13px] font-medium text-text">
-            Час
-          </label>
-          <input
-            id="time"
-            name="time"
-            type="time"
-            defaultValue={v?.time ?? "10:00"}
-            className={inputBase}
-          />
-        </div>
+      <div className="mt-3 flex flex-col gap-1.5">
+        <label htmlFor="date" className="text-[13px] font-medium text-text">
+          Дата
+        </label>
+        <input
+          id="date"
+          name="date"
+          type="date"
+          defaultValue={v?.date ?? ""}
+          className={inputBase}
+        />
       </div>
 
       <div className="mt-3 flex flex-col gap-1.5">

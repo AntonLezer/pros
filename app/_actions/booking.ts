@@ -13,7 +13,6 @@ export type BookingResult =
         phone: string;
         service?: string;
         date?: string;
-        time?: string;
         comment?: string;
       };
     };
@@ -57,10 +56,9 @@ export async function submitBooking(
   const phone = String(formData.get("phone") ?? "");
   const service = String(formData.get("service") ?? "");
   const date = String(formData.get("date") ?? "");
-  const time = String(formData.get("time") ?? "");
   const comment = String(formData.get("comment") ?? "");
 
-  const values = { name, phone, service, date, time, comment };
+  const values = { name, phone, service, date, comment };
 
   const fieldErrors = validate(name, phone);
   if (Object.keys(fieldErrors).length > 0) {
@@ -79,7 +77,6 @@ export async function submitBooking(
     phone: digitsOnly(phone),
     service: service || undefined,
     date: date || undefined,
-    time: time || undefined,
     comment: comment.trim() || undefined,
   });
 

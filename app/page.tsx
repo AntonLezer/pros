@@ -1,6 +1,7 @@
 import Hero from "./_components/hero";
 import Services from "./_components/services";
 import BeforeAfter from "./_components/before-after";
+import Video from "./_components/video";
 import WhyUs from "./_components/why-us";
 import Reviews from "./_components/reviews";
 import Doctors from "./_components/doctors";
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <Services />
       <BeforeAfter />
+      <Video />
       <WhyUs />
       <Reviews />
       <Doctors />
