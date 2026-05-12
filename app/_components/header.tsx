@@ -17,13 +17,13 @@ const DRAWER_ITEMS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-function Logo({ size = 18, imageSize = 38 }: { size?: number; imageSize?: number }) {
+function Logo({ size = 16, imageSize = 38 }: { size?: number; imageSize?: number }) {
+  const smallSize = Math.max(10, Math.round(size * 0.62));
   return (
     <Link
       href="/"
-      aria-label="Центр Плоскирів — головна"
-      className="inline-flex items-center gap-2.5 font-display font-bold tracking-tight text-dark"
-      style={{ fontSize: `${size}px`, letterSpacing: "-0.5px" }}
+      aria-label="Медичний науково-виробничий центр Плоскирів — головна"
+      className="inline-flex items-center gap-2.5 font-display tracking-tight text-dark"
     >
       <Image
         src="/logo/logo.png"
@@ -34,8 +34,19 @@ function Logo({ size = 18, imageSize = 38 }: { size?: number; imageSize?: number
         className="shrink-0 object-contain"
         style={{ width: imageSize, height: imageSize }}
       />
-      <span>
-        Плоски<span className="text-accent">рів</span>
+      <span className="flex flex-col leading-[1.1]">
+        <span
+          className="font-medium text-muted"
+          style={{ fontSize: `${smallSize}px` }}
+        >
+          медичний науково-виробничий
+        </span>
+        <span
+          className="font-bold tracking-[-0.5px] text-accent"
+          style={{ fontSize: `${size}px` }}
+        >
+          центр «ПЛОСКИРІВ»
+        </span>
       </span>
     </Link>
   );

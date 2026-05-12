@@ -50,9 +50,8 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6">
         <Link
           href="/"
-          aria-label="Центр Плоскирів — головна"
-          className="inline-flex items-center gap-2.5 font-display text-[16px] font-bold text-white"
-          style={{ letterSpacing: "-0.5px" }}
+          aria-label="Медичний науково-виробничий центр Плоскирів — головна"
+          className="inline-flex items-center gap-2.5 font-display tracking-tight"
         >
           <Image
             src="/logo/logo.png"
@@ -62,8 +61,13 @@ export default function Footer() {
             className="shrink-0 object-contain"
             style={{ width: 32, height: 32 }}
           />
-          <span>
-            Плоски<span className="text-accent">рів</span>
+          <span className="flex flex-col leading-[1.1]">
+            <span className="text-[10px] font-medium text-white/45">
+              медичний науково-виробничий
+            </span>
+            <span className="text-[16px] font-bold tracking-[-0.5px] text-accent">
+              центр «ПЛОСКИРІВ»
+            </span>
           </span>
         </Link>
 
