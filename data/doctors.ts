@@ -8,9 +8,25 @@ export type Doctor = {
 };
 
 export const doctors: Doctor[] = [
+    {
+    id: "administrator",
+    name: "Мирона Любов",
+    specialty: "Адміністратор, координатор всіх процесів клініки",
+    experienceYears: 5,
+    initials: "ІП",
+    image: "/images/doctors/IMG_9420.jpg",
+  },
+  {
+    id: "chief-technician",
+    name: "Мирона Анатолій",
+    specialty: "Головний зубний технік клініки",
+    experienceYears: 38,
+    initials: "ІП",
+    image: "/images/doctors/IMG_9049.jpg",
+  },  
   {
     id: "ploskyriv",
-    name: "Іван Плоскирів",
+    name: "Оліх Вадим",
     specialty: "Головний лікар, імплантолог",
     experienceYears: 12,
     initials: "ІП",
@@ -18,7 +34,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: "kovalchuk",
-    name: "Ольга Ковальчук",
+    name: "Смоліна Євгенія",
     specialty: "Терапевт, ендодонтист",
     experienceYears: 8,
     initials: "ОК",
@@ -26,10 +42,18 @@ export const doctors: Doctor[] = [
   },
   {
     id: "melnyk",
-    name: "Юлія Мельник",
+    name: "Чорна Катерина",
     specialty: "Ортодонт",
     experienceYears: 7,
     initials: "ЮМ",
     image: "/images/doctors/IMG_9027.jpg",
-  }
+  },
+  {
+    id: "technician",
+    name: "Пушкіна Ірина",
+    specialty: "Зубний технік",
+    experienceYears: 20,
+    initials: "ІП",
+    image: "/images/doctors/IMG_9050.jpg",
+  },
 ];

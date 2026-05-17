@@ -34,7 +34,7 @@ const SheetContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-y-0 right-0 z-[201] flex h-full w-[300px] flex-col gap-0 bg-white p-8 shadow-[-8px_0_32px_rgba(0,0,0,0.12)] transition-transform ease-out data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=closed]:duration-200 data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=open]:duration-300",
+        "fixed inset-y-0 right-0 z-[201] flex h-full w-[320px] flex-col gap-0 bg-white p-5 shadow-[-8px_0_32px_rgba(0,0,0,0.12)] transition-transform ease-out data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=closed]:duration-200 data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=open]:duration-300",
         className,
       )}
       {...props}
@@ -42,7 +42,7 @@ const SheetContent = forwardRef<
       {children}
       <DialogPrimitive.Close
         aria-label="Закрити меню"
-        className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full text-text transition-colors hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full text-text transition-colors hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <X className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
       </DialogPrimitive.Close>

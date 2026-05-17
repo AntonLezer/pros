@@ -42,6 +42,7 @@ const FOOTER_LINKS = [
   { href: "#services", label: "Послуги" },
   { href: "#doctors", label: "Лікарі" },
   { href: "#contacts", label: "Контакти" },
+  { href: "/docs/Публічний-договір-(оферта)-стом.pdf", label: "Публічна оферта", external: true },
 ];
 
 export default function Footer() {
@@ -75,17 +76,29 @@ export default function Footer() {
           © {new Date().getFullYear()} Стоматологія Плоскирів · Хмельницький
         </p>
 
-        <div className="flex items-center gap-6">
-          <nav aria-label="Підвал" className="flex gap-6">
-            {FOOTER_LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-[13px] text-white/45 transition-colors hover:text-accent"
-              >
-                {l.label}
-              </Link>
-            ))}
+        <div className="flex flex-wrap items-center gap-6">
+          <nav aria-label="Підвал" className="flex flex-wrap gap-6">
+            {FOOTER_LINKS.map((l) =>
+              l.external ? (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[13px] text-white/45 transition-colors hover:text-accent"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="text-[13px] text-white/45 transition-colors hover:text-accent"
+                >
+                  {l.label}
+                </Link>
+              )
+            )}
           </nav>
           <div className="flex items-center gap-2">
             <a

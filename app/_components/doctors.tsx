@@ -24,9 +24,9 @@ export default function Doctors() {
           Кожен спеціаліст — сертифікований фахівець із постійним підвищенням кваліфікації.
         </p>
 
-        <ul className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <ul className="mt-12 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 md:grid-cols-3">
           {doctors.map((d) => (
-            <li key={d.id} className="overflow-hidden rounded-[20px] bg-surface transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)]">
+            <li key={d.id} className="w-[78%] shrink-0 snap-start overflow-hidden rounded-[20px] bg-surface transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] sm:w-auto sm:shrink">
               <div className="relative aspect-[3/4] bg-cream-2">
                 {d.image ? (
                   <Image
