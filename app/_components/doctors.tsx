@@ -43,11 +43,13 @@ export default function Doctors() {
                 )}
               </div>
               <div className="p-5 pt-5 md:px-6 md:pb-6">
-                <h3 className="font-display text-[15px] font-semibold leading-snug text-dark">
+                {/* <h3 className="font-display text-[15px] font-semibold leading-snug text-dark">
                   {d.name}
-                </h3>
+                </h3> */}
                 <p className="mt-1 text-[13px] font-medium text-accent">{d.specialty}</p>
-                <p className="mt-2 text-[13px] text-muted">Досвід: {pluralizeYears(d.experienceYears)}</p>
+                {d.experienceYears !== undefined && (
+                  <p className="mt-2 text-[13px] text-muted">Досвід: {pluralizeYears(d.experienceYears)}</p>
+                )}
               </div>
             </li>
           ))}
