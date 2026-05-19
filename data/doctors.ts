@@ -10,7 +10,7 @@ export type Doctor = {
 export const doctors: Doctor[] = [
     {
     id: "administrator",
-    name: "Любов",
+    name: "Любов Андріівна",
     specialty: "Адміністратор, координатор всіх процесів клініки",
     //experienceYears: 5,
     initials: "ІП",
@@ -18,7 +18,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: "chief-technician",
-    name: "Анатолій",
+    name: "Анатолій Михайлович",
     specialty: "Головний зубний технік клініки",
     experienceYears: 38,
     initials: "ІП",
@@ -26,15 +26,15 @@ export const doctors: Doctor[] = [
   },  
   {
     id: "ploskyriv",
-    name: "Вадим",
-    specialty: "Головний лікар, імплантолог",
+    name: "Вадим Олександрович",
+    specialty: "Хірург -імплантолог",
     experienceYears: 12,
     initials: "ІП",
     image: "/images/doctors/IMG_8994.jpg",
   },
   {
     id: "kovalchuk",
-    name: "Євгенія",
+    name: "Євгенія Володимирівна",
     specialty: "Стоматолог загальної практики , ортодонт",
     experienceYears: 8,
     initials: "ОК",
@@ -42,7 +42,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: "melnyk",
-    name: "Катерина",
+    name: "Катерина Петрівна",
     specialty: "Стоматолог терапевт , ендодонтист",
     experienceYears: 12,
     initials: "ЮМ",
@@ -50,7 +50,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: "technician",
-    name: "Пушкіна Ірина",
+    name: "Ірина Петрівна",
     specialty: "Зубний технік",
     experienceYears: 20,
     initials: "ІП",
