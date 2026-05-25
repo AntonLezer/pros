@@ -3,7 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
-import type { DisplayReview } from "@/lib/google-reviews";
+
+export type DisplayReview = {
+  id: string;
+  authorName: string;
+  initials: string;
+  rating: 1 | 2 | 3 | 4 | 5;
+  text: string;
+  photoUrl?: string;
+  authorUrl?: string;
+  relativeTime?: string;
+};
 
 const GAP = 24;
 

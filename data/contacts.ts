@@ -30,5 +30,5 @@ export const contacts: Contacts = {
   mapDirectionsHref:
     "https://www.google.com/maps/dir/?api=1&destination=" +
     encodeURIComponent("вул. Бажана 19, Хмельницький"),
-  googlePlaceId: "ChIJMZvh8zgGMkcRSqFDzDj_bHE",
+  googlePlaceId: "ChIJMZvh8zgGMkcRoakypy9IenM",
 };

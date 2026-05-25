@@ -3,7 +3,10 @@ import { Unbounded, Inter } from "next/font/google";
 import "./globals.css";
 import { contacts } from "@/data/contacts";
 import { services } from "@/data/services";
-import { reviews } from "@/data/reviews";
+import googleReviewsData from "@/data/google-reviews.json";
+
+type SchemaReview = { rating: number; authorName: string; text: string };
+const reviews = googleReviewsData.reviews as SchemaReview[];
 import { doctors } from "@/data/doctors";
 import { faqItems } from "@/data/faq";
 import Header from "./_components/header";
@@ -102,8 +105,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const ratingSum = reviews.reduce((acc, r) => acc + r.rating, 0);
-const ratingValue = (ratingSum / reviews.length).toFixed(1);
+const ratingValue = reviews.length
+  ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+  : null;
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -144,23 +148,27 @@ const localBusinessSchema = {
       closes: "18:00",
     },
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue,
-    reviewCount: reviews.length,
-    bestRating: 5,
-    worstRating: 1,
-  },
-  review: reviews.map((r) => ({
-    "@type": "Review",
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: r.rating,
-      bestRating: 5,
-    },
-    author: { "@type": "Person", name: r.name },
-    reviewBody: r.text,
-  })),
+  ...(ratingValue
+    ? {
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue,
+          reviewCount: reviews.length,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        review: reviews.map((r) => ({
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: r.rating,
+            bestRating: 5,
+          },
+          author: { "@type": "Person", name: r.authorName },
+          reviewBody: r.text,
+        })),
+      }
+    : {}),
   employee: doctors.map((d) => ({
     "@type": "Physician",
     "@id": `${SITE_URL}#${d.id}`,
