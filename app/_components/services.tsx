@@ -107,6 +107,11 @@ export default function Services() {
                 <p className="mt-4 text-[14px] font-semibold text-accent">
                   від {priceFormatter.format(s.priceFrom)} грн
                 </p>
+                {s.extraOffer && (
+                  <p className="mt-1 text-[13px] text-muted">
+                    {s.extraOffer.label} від {priceFormatter.format(s.extraOffer.priceFrom)} грн
+                  </p>
+                )}
               </Link>
             </li>
           ))}

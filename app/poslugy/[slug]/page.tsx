@@ -48,6 +48,23 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   if (!service) notFound();
   const url = `${SITE_URL}/poslugy/${service.slug}`;
 
+  const primaryOffer = {
+    "@type": "Offer",
+    priceCurrency: "UAH",
+    price: service.priceFrom,
+    availability: "https://schema.org/InStock",
+    seller: { "@id": `${SITE_URL}#dentist` },
+  };
+  const extraOffer = service.extraOffer
+    ? {
+        "@type": "Offer",
+        name: service.extraOffer.label,
+        priceCurrency: "UAH",
+        price: service.extraOffer.priceFrom,
+        availability: "https://schema.org/InStock",
+        seller: { "@id": `${SITE_URL}#dentist` },
+      }
+    : null;
   const procedureSchema = {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
@@ -57,13 +74,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
     procedureType: "Therapeutic",
     bodyLocation: "Mouth",
     url,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "UAH",
-      price: service.priceFrom,
-      availability: "https://schema.org/InStock",
-      seller: { "@id": `${SITE_URL}#dentist` },
-    },
+    offers: extraOffer ? [primaryOffer, extraOffer] : primaryOffer,
   };
 
   const breadcrumbSchema = {
@@ -160,7 +171,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               від {priceFormatter.format(service.priceFrom)} грн
             </p>
             <p className="mt-3 text-[14px] leading-relaxed text-muted">
-              Точна вартість залежить від клінічного випадку. Безкоштовна консультація — і ви отримаєте детальний кошторис ще до початку лікування.
+              Точна вартість залежить від клінічного випадку. Приходьте на консультація — і ви отримаєте детальний кошторис ще до початку лікування.
             </p>
             <Link
               href="/#booking"

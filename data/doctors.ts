@@ -2,7 +2,7 @@ export type Doctor = {
   id: string;
   name: string;
   specialty: string;
-  experienceYears?: number;
+  experienceYears?: number | string;
   initials: string;
   image?: string;
 };
@@ -27,24 +27,24 @@ export const doctors: Doctor[] = [
   {
     id: "ploskyriv",
     name: "Вадим Олександрович",
-    specialty: "Хірург -імплантолог",
-    experienceYears: 12,
+    specialty: "хірург-імплантолог",
+    experienceYears: "10+",
     initials: "ІП",
     image: "/images/doctors/IMG_8994.jpg",
   },
   {
     id: "kovalchuk",
     name: "Євгенія Володимирівна",
-    specialty: "Стоматолог загальної практики , ортодонт",
-    experienceYears: 8,
+    specialty: "стоматолог загальної практики , ортодонт",
+    experienceYears: "8+",
     initials: "ОК",
     image: "/images/doctors/IMG_8982.jpg",
   },
   {
     id: "melnyk",
     name: "Катерина Петрівна",
-    specialty: "Стоматолог терапевт , ендодонтист",
-    experienceYears: 12,
+    specialty: "стоматолог-терапевт, ендодонтист",
+    experienceYears: "12+",
     initials: "ЮМ",
     image: "/images/doctors/IMG_9027.jpg",
   },

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { doctors } from "@/data/doctors";
 
-function pluralizeYears(n: number) {
-  if (n % 10 === 1 && n % 100 !== 11) return `${n} рік`;
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return `${n} роки`;
-  return `${n} років`;
+function formatExperience(value: number | string) {
+  if (typeof value === "string") return `${value} років`;
+  if (value % 10 === 1 && value % 100 !== 11) return `${value} рік`;
+  if ([2, 3, 4].includes(value % 10) && ![12, 13, 14].includes(value % 100)) return `${value} роки`;
+  return `${value} років`;
 }
 
 export default function Doctors() {
@@ -18,7 +19,7 @@ export default function Doctors() {
           id="doctors-h2"
           className="mt-3 font-display text-[clamp(22px,2.8vw,40px)] font-bold leading-tight tracking-tight text-dark"
         >
-          Лікарі, яким довіряють
+          Люди , які стоять за вашою здоровою усмішкою
         </h2>
         <p className="mt-4 max-w-[560px] text-[16px] leading-relaxed text-muted">
           Кожен спеціаліст — сертифікований фахівець із постійним підвищенням кваліфікації.
@@ -48,7 +49,7 @@ export default function Doctors() {
                 </h3> */}
                 <p className="mt-1 text-[13px] font-medium text-accent">{d.specialty}</p>
                 {d.experienceYears !== undefined && (
-                  <p className="mt-2 text-[13px] text-muted">Досвід: {pluralizeYears(d.experienceYears)}</p>
+                  <p className="mt-2 text-[13px] text-muted">Досвід: {formatExperience(d.experienceYears)}</p>
                 )}
               </div>
             </li>

@@ -107,7 +107,7 @@ export default function Hero() {
         onTouchEnd={onTouchEnd}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Команда та інтер'єр стоматології Центр Плоскирів"
+        aria-label="команда та інтер'єр стоматології ПЛОСКИРІВ"
       >
         {SLIDES.map((s, i) => (
           <div

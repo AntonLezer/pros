@@ -178,22 +178,42 @@ const localBusinessSchema = {
     medicalSpecialty: "Dentistry",
     knowsLanguage: ["uk", "ru"],
   })),
-  makesOffer: services.map((s) => ({
-    "@type": "Offer",
-    priceCurrency: "UAH",
-    price: s.priceFrom,
-    priceSpecification: {
-      "@type": "PriceSpecification",
+  makesOffer: services.flatMap((s) => {
+    const primary = {
+      "@type": "Offer",
       priceCurrency: "UAH",
       price: s.priceFrom,
-      valueAddedTaxIncluded: true,
-    },
-    itemOffered: {
-      "@type": "MedicalProcedure",
-      name: s.name,
-      description: s.description,
-    },
-  })),
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "UAH",
+        price: s.priceFrom,
+        valueAddedTaxIncluded: true,
+      },
+      itemOffered: {
+        "@type": "MedicalProcedure",
+        name: s.name,
+        description: s.description,
+      },
+    };
+    if (!s.extraOffer) return [primary];
+    const extra = {
+      "@type": "Offer",
+      priceCurrency: "UAH",
+      price: s.extraOffer.priceFrom,
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "UAH",
+        price: s.extraOffer.priceFrom,
+        valueAddedTaxIncluded: true,
+      },
+      itemOffered: {
+        "@type": "MedicalProcedure",
+        name: `${s.name} — ${s.extraOffer.label}`,
+        description: `${s.extraOffer.label} зубів, ${s.name.toLowerCase()}.`,
+      },
+    };
+    return [primary, extra];
+  }),
   medicalSpecialty: "Dentistry",
 };
 
