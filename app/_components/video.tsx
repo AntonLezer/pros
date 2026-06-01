@@ -2,10 +2,11 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
-const VIDEO_EMBED_URL =
-  "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0";
+const VIDEO_SRC =
+  "https://6pzshka9v5rmnwez.public.blob.vercel-storage.com/presentation.mp4";
 
 export default function Video() {
   const [open, setOpen] = useState(false);
@@ -38,41 +39,13 @@ export default function Video() {
                 aria-label="Відкрити відеоогляд клініки"
                 className="group relative mt-12 block aspect-video w-full overflow-hidden rounded-[28px] bg-dark shadow-[0_32px_80px_rgba(0,0,0,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
               >
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-[linear-gradient(135deg,#3D2E24_0%,#251A14_50%,#1C1C1E_100%)]"
+                <Image
+                  src="/images/banner/IMG_9318.jpg"
+                  alt="Команда стоматології Плоскирів"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 900px"
+                  className="object-cover"
                 />
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 grid place-items-center"
-                >
-                  <svg
-                    width="120"
-                    height="120"
-                    viewBox="0 0 120 120"
-                    fill="none"
-                    className="opacity-15"
-                  >
-                    <circle cx="60" cy="60" r="56" stroke="white" strokeWidth="2" />
-                    <rect
-                      x="20"
-                      y="30"
-                      width="80"
-                      height="60"
-                      rx="6"
-                      stroke="white"
-                      strokeWidth="2"
-                    />
-                    <circle cx="40" cy="50" r="8" stroke="white" strokeWidth="1.5" />
-                    <path
-                      d="M20 75 L38 55 L55 68 L72 48 L100 75"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.5)_100%)]"
@@ -83,7 +56,7 @@ export default function Video() {
                 </span>
 
                 <span className="absolute bottom-5 right-5 z-10 rounded-full bg-black/60 px-3 py-1 text-[13px] font-semibold text-white backdrop-blur">
-                  2:34
+                  1:04
                 </span>
 
                 <span className="absolute left-1/2 top-1/2 z-10 grid h-[60px] w-[60px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white/95 shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-[transform,box-shadow] duration-200 ease-out group-hover:scale-110 group-hover:shadow-[0_12px_48px_rgba(224,123,57,0.4)] md:h-20 md:w-20">
@@ -115,11 +88,14 @@ export default function Video() {
                 </Dialog.Close>
                 <div className="aspect-video w-full overflow-hidden rounded-[20px] bg-black shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
                   {open && (
-                    <iframe
-                      src={VIDEO_EMBED_URL}
+                    <video
+                      src={VIDEO_SRC}
+                      poster="/images/banner/IMG_9318.jpg"
                       title="Відеоогляд стоматології Плоскирів"
-                      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                      allowFullScreen
+                      controls
+                      autoPlay
+                      playsInline
+                      preload="none"
                       className="h-full w-full border-0"
                     />
                   )}
