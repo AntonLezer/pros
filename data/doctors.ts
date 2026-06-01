@@ -10,7 +10,7 @@ export type Doctor = {
 export const doctors: Doctor[] = [
     {
     id: "administrator",
-    name: "Любов Андріівна",
+    name: "Любов Андріївна",
     specialty: "Адміністратор, координатор всіх процесів клініки",
     //experienceYears: 5,
     initials: "ІП",
@@ -35,7 +35,7 @@ export const doctors: Doctor[] = [
   {
     id: "kovalchuk",
     name: "Євгенія Володимирівна",
-    specialty: "стоматолог загальної практики , ортодонт",
+    specialty: "стоматолог загальної практики, ортодонт",
     experienceYears: "8+",
     initials: "ОК",
     image: "/images/doctors/IMG_8982.jpg",

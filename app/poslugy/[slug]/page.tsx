@@ -23,7 +23,7 @@ export async function generateMetadata(
   if (!service) return {};
   const url = `${SITE_URL}/poslugy/${service.slug}`;
   return {
-    title: service.metaTitle,
+    title: { absolute: service.metaTitle },
     description: service.metaDescription,
     alternates: { canonical: `/poslugy/${service.slug}` },
     openGraph: {
@@ -171,7 +171,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               від {priceFormatter.format(service.priceFrom)} грн
             </p>
             <p className="mt-3 text-[14px] leading-relaxed text-muted">
-              Точна вартість залежить від клінічного випадку. Приходьте на консультація — і ви отримаєте детальний кошторис ще до початку лікування.
+              Точна вартість залежить від клінічного випадку. Приходьте на консультацію — і ви отримаєте детальний кошторис ще до початку лікування.
             </p>
             <Link
               href="/#booking"

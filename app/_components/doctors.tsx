@@ -19,7 +19,7 @@ export default function Doctors() {
           id="doctors-h2"
           className="mt-3 font-display text-[clamp(22px,2.8vw,40px)] font-bold leading-tight tracking-tight text-dark"
         >
-          Люди , які стоять за вашою здоровою усмішкою
+          Люди, які стоять за вашою здоровою усмішкою
         </h2>
         <p className="mt-4 max-w-[560px] text-[16px] leading-relaxed text-muted">
           Кожен спеціаліст — сертифікований фахівець із постійним підвищенням кваліфікації.
@@ -44,9 +44,9 @@ export default function Doctors() {
                 )}
               </div>
               <div className="p-5 pt-5 md:px-6 md:pb-6">
-                {/* <h3 className="font-display text-[15px] font-semibold leading-snug text-dark">
+                <h3 className="font-display text-[15px] font-semibold leading-snug text-dark">
                   {d.name}
-                </h3> */}
+                </h3> 
                 <p className="mt-1 text-[13px] font-medium text-accent">{d.specialty}</p>
                 {d.experienceYears !== undefined && (
                   <p className="mt-2 text-[13px] text-muted">Досвід: {formatExperience(d.experienceYears)}</p>

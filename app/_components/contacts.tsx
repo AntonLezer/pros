@@ -133,9 +133,9 @@ function ContactRow({
         <Icon className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
       </span>
       <div>
-        <h4 className="text-[13px] font-semibold uppercase tracking-[0.5px] text-muted">
+        <h3 className="text-[13px] font-semibold uppercase tracking-[0.5px] text-muted">
           {label}
-        </h4>
+        </h3>
         <div className="mt-1 text-[15px] font-medium leading-snug text-dark">{children}</div>
       </div>
     </div>
