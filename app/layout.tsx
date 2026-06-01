@@ -172,7 +172,7 @@ const localBusinessSchema = {
   employee: doctors.map((d) => ({
     "@type": "Physician",
     "@id": `${SITE_URL}#${d.id}`,
-    // name: d.name,
+    name: d.name,
     jobTitle: d.specialty,
     image: d.image ? `${SITE_URL}${d.image}` : undefined,
     medicalSpecialty: "Dentistry",

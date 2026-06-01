@@ -32,9 +32,11 @@ function TelegramIcon({ className }: { className?: string }) {
 }
 
 const FOOTER_LINKS = [
-  { href: "#services", label: "Послуги" },
-  { href: "#doctors", label: "Лікарі" },
-  { href: "#contacts", label: "Контакти" },
+  { href: "/#services", label: "Послуги" },
+  { href: "/tsiny", label: "Ціни" },
+  { href: "/pro-kliniku", label: "Про клініку" },
+  { href: "/#doctors", label: "Лікарі" },
+  { href: "/#contacts", label: "Контакти" },
   { href: "/docs/Публічний-договір-(оферта)-стом.pdf", label: "Публічна оферта", external: true },
 ];
 

@@ -19,6 +19,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: `${SITE_URL}/tsiny`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/pro-kliniku`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
     ...servicePages,
   ];
 }

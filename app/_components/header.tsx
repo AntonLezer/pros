@@ -9,12 +9,14 @@ import { contacts } from "@/data/contacts";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const DRAWER_ITEMS = [
-  { href: "#services", label: "Послуги" },
-  { href: "#before-after", label: "До/Після" },
-  { href: "#doctors", label: "Лікарі" },
-  { href: "#reviews", label: "Відгуки" },
-  { href: "#contacts", label: "Контакти" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#services", label: "Послуги" },
+  { href: "/tsiny", label: "Ціни" },
+  { href: "/#before-after", label: "До/Після" },
+  { href: "/#doctors", label: "Лікарі" },
+  { href: "/#reviews", label: "Відгуки" },
+  { href: "/pro-kliniku", label: "Про клініку" },
+  { href: "/#contacts", label: "Контакти" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 function Logo({ size = 16, imageSize = 38 }: { size?: number; imageSize?: number }) {
