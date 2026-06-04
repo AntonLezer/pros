@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import { services } from "@/data/services";
 
 export type BookingResult =
   | { ok: true }
@@ -25,14 +26,61 @@ function digitsOnly(s: string): string {
   return s.replace(/\D/g, "");
 }
 
+// Normalizes any accepted input to "+380 68 123 4567". Falls back to the raw value if unexpected.
+function formatPhone(phone: string): string {
+  const digits = digitsOnly(phone);
+  let national = digits;
+  if (digits.length === 12 && digits.startsWith("380")) national = digits.slice(3);
+  else if (digits.length === 10 && digits.startsWith("0")) national = digits.slice(1);
+  if (national.length !== 9) return phone.trim();
+  return `+380 ${national.slice(0, 2)} ${national.slice(2, 5)} ${national.slice(5)}`;
+}
+
 function validate(name: string, phone: string): { name?: string; phone?: string } {
   const errors: { name?: string; phone?: string } = {};
   if (name.trim().length < 2) errors.name = "Введіть ім'я (мін. 2 символи)";
   const digits = digitsOnly(phone);
   if (digits.length !== 10 && digits.length !== 12) {
-    errors.phone = "Введіть телефон (наприклад, 068 123 4567)";
+    errors.phone = "Введіть телефон (наприклад, 068 000 0000)";
   }
   return errors;
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Sends the booking to Telegram. Returns true if at least one recipient received it.
+async function sendTelegramNotification(text: string): Promise<boolean> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatIds = [601978001, 1124450777]
+
+  if (!token || chatIds.length === 0) {
+    console.warn("[booking] Telegram not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_IDS)");
+    return false;
+  }
+
+  const results = await Promise.all(
+    chatIds.map(async (chatId) => {
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
+        });
+        if (!res.ok) {
+          console.error(`[booking] Telegram error for chat ${chatId}:`, await res.text());
+          return false;
+        }
+        return true;
+      } catch (err) {
+        console.error(`[booking] Telegram request failed for chat ${chatId}:`, err);
+        return false;
+      }
+    }),
+  );
+
+  return results.some(Boolean);
 }
 
 function isRateLimited(ip: string): boolean {
@@ -79,6 +127,31 @@ export async function submitBooking(
     date: date || undefined,
     comment: comment.trim() || undefined,
   });
+
+  const serviceName = services.find((s) => s.id === service)?.name ?? service;
+
+  const message = [
+    "🦷 <b>Нова заявка на прийом</b>",
+    "",
+    `👤 <b>Ім'я:</b> ${escapeHtml(name.trim())}`,
+    `📞 <b>Телефон:</b> ${escapeHtml(formatPhone(phone))}`,
+    serviceName ? `🩺 <b>Послуга:</b> ${escapeHtml(serviceName)}` : "",
+    date ? `📅 <b>Бажана дата:</b> ${escapeHtml(date)}` : "",
+    comment.trim() ? `💬 <b>Коментар:</b> ${escapeHtml(comment.trim())}` : "",
+    "",
+    `⏰ ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kiev" })}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const sent = await sendTelegramNotification(message);
+  if (!sent && process.env.NODE_ENV === "production") {
+    return {
+      ok: false,
+      error: "Не вдалося надіслати заявку. Зателефонуйте нам, будь ласка.",
+      values,
+    };
+  }
 
   return { ok: true };
 }

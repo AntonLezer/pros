@@ -1,17 +1,32 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { submitBooking, type BookingResult } from "../_actions/booking";
 import { services } from "@/data/services";
 
 const inputBase =
   "w-full rounded-[10px] border-[1.5px] border-cream-2 bg-cream px-4 py-3.5 text-[14px] text-dark placeholder:text-muted/60 transition-colors focus:border-accent focus:bg-white focus:outline-none";
 
+const PHONE_PREFIX = "+380 ";
+
+// Live-formats to "+380 XX XXX XXXX" with a fixed +380 prefix. Strips a leading 380/0 trunk prefix.
+function formatPhoneInput(raw: string): string {
+  let d = raw.replace(/\D/g, "");
+  if (d.startsWith("380")) d = d.slice(3);
+  else if (d.startsWith("0")) d = d.slice(1);
+  d = d.slice(0, 9);
+  let out = PHONE_PREFIX + d.slice(0, 2);
+  if (d.length > 2) out += ` ${d.slice(2, 5)}`;
+  if (d.length > 5) out += ` ${d.slice(5, 9)}`;
+  return out;
+}
+
 export default function BookingForm() {
   const [state, formAction, pending] = useActionState<BookingResult | null, FormData>(
     submitBooking,
     null,
   );
+  const [phone, setPhone] = useState(PHONE_PREFIX);
 
   if (state?.ok) {
     return (
@@ -80,8 +95,9 @@ export default function BookingForm() {
             required
             autoComplete="tel"
             inputMode="tel"
-            placeholder="+380 68 123 4567"
-            defaultValue={v?.phone ?? ""}
+            placeholder="+380 00 000 0000"
+            value={phone}
+            onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
             aria-invalid={Boolean(phoneError) || undefined}
             aria-describedby={phoneError ? "phone-error" : undefined}
             className={inputBase}
