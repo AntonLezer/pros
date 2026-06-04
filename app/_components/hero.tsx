@@ -65,7 +65,20 @@ function splitTitle(title: string, accent: string) {
 export default function Hero() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mountRest, setMountRest] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  // Render only the LCP slide on first paint; mount the rest once the browser
+  // is idle so they don't compete for bandwidth with the priority hero image.
+  useEffect(() => {
+    const ric = window.requestIdleCallback;
+    if (ric) {
+      const id = ric(() => setMountRest(true));
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(() => setMountRest(true), 200);
+    return () => window.clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -109,25 +122,28 @@ export default function Hero() {
         aria-roledescription="carousel"
         aria-label="команда та інтер'єр стоматології ПЛОСКИРІВ"
       >
-        {SLIDES.map((s, i) => (
-          <div
-            key={s.src}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              i === active ? "opacity-100" : "opacity-0"
-            }`}
-            aria-hidden={i !== active}
-          >
-            <Image
-              src={s.src}
-              alt={s.alt}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              quality={90}
-              className="object-cover object-top md:object-center"
-            />
-          </div>
-        ))}
+        {SLIDES.map((s, i) =>
+          i === 0 || mountRest ? (
+            <div
+              key={s.src}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                i === active ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden={i !== active}
+            >
+              <Image
+                src={s.src}
+                alt={s.alt}
+                fill
+                priority={i === 0}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                sizes="100vw"
+                quality={80}
+                className="object-cover object-top md:object-center"
+              />
+            </div>
+          ) : null
+        )}
 
         <div
           className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/10 md:bg-gradient-to-r md:from-black/70 md:via-black/30 md:to-transparent"
