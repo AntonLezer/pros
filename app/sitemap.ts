@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
 
-const SITE_URL = "https://ploskyriv.com.ua";
+const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

@@ -26,7 +26,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = "https://ploskyriv.com.ua";
+const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 const SITE_NAME = "Центр Плоскирів";
 const CITY = "Хмельницький";
 const TITLE = `Стоматологія у Хмельницькому — ${SITE_NAME}: лікування, імплантація, брекети`;
@@ -80,17 +80,13 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: ["/opengraph-image"],
   },
-  // NOTE: robots are set to NOINDEX while this site lives on a test domain.
-  // When migrating to production, flip to `index: true, follow: true` and add
-  // `googleBot: { "max-image-preview": "large" }` for image-rich SERP previews.
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
     },
   },
   verification: {
@@ -118,7 +114,7 @@ const localBusinessSchema = {
   description: DESCRIPTION,
   url: SITE_URL,
   telephone: contacts.phone,
-  email: "info@ploskyriv.ua",
+  email: "mnvc.ploskiriv@gmail.com",
   image: [`${SITE_URL}/opengraph-image`],
   logo: `${SITE_URL}/logo/logo.png`,
   priceRange: "₴₴",

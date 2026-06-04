@@ -4,7 +4,7 @@ import { ChevronRight, Phone } from "lucide-react";
 import { services } from "@/data/services";
 import { contacts } from "@/data/contacts";
 
-const SITE_URL = "https://ploskyriv.com.ua";
+const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 const priceFormatter = new Intl.NumberFormat("uk-UA");
 const TITLE = "Ціни на стоматологічні послуги у Хмельницькому — Центр Плоскирів";
 const DESCRIPTION =

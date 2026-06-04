@@ -8,7 +8,7 @@ const MAP_EMBED_SRC = GOOGLE_MAPS_API_KEY
   ? `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(ADDRESS_FULL)}`
   : `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_FULL)}&output=embed`;
 
-const EMAIL = "info@ploskyriv.ua";
+const EMAIL = "mnvc.ploskiriv@gmail.com";
 
 function TelegramIcon({
   className,

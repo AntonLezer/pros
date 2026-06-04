@@ -6,7 +6,7 @@ import { services } from "@/data/services";
 import { contacts } from "@/data/contacts";
 import { faqItems } from "@/data/faq";
 
-const SITE_URL = "https://ploskyriv.com.ua";
+const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 const priceFormatter = new Intl.NumberFormat("uk-UA");
 
 type Params = { slug: string };

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronRight, Phone } from "lucide-react";
 import { contacts } from "@/data/contacts";
 
-const SITE_URL = "https://ploskyriv.com.ua";
+const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 const TITLE = "Про клініку «Центр Плоскирів» — стоматологія у Хмельницькому";
 const DESCRIPTION =
   "Медичний науково-виробничий центр «Плоскирів» — сімейна стоматологія у Хмельницькому: понад 9 років досвіду, власна зуботехнічна лабораторія, сучасне обладнання та лікування без болю.";
