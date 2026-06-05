@@ -53,7 +53,7 @@ function escapeHtml(s: string): string {
 // Sends the booking to Telegram. Returns true if at least one recipient received it.
 async function sendTelegramNotification(text: string): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatIds = [601978001, 1124450777]
+  const chatIds = [601978001, 1124450777, 8703175598]
 
   if (!token || chatIds.length === 0) {
     console.warn("[booking] Telegram not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_IDS)");

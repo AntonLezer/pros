@@ -111,7 +111,7 @@ export default function Hero() {
   return (
     <section aria-labelledby="hero-h1" className="bg-cream-2">
       <div
-        className="relative h-[calc(100dvh-69px)] md:h-[calc(100dvh-77px)] w-full overflow-hidden"
+        className="relative h-[calc(100svh-69px)] md:h-[calc(100svh-77px)] w-full overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocusCapture={() => setPaused(true)}
