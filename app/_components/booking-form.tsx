@@ -20,10 +20,26 @@ declare global {
 // (the server then skips verification, so the form keeps working in dev).
 function getRecaptchaToken(): Promise<string> {
   const grecaptcha = window.grecaptcha;
-  if (!RECAPTCHA_SITE_KEY || !grecaptcha) return Promise.resolve("");
+  if (!RECAPTCHA_SITE_KEY) {
+    console.warn("[recaptcha] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is missing on the client");
+    return Promise.resolve("");
+  }
+  if (!grecaptcha) {
+    console.warn("[recaptcha] grecaptcha not loaded (script blocked or not ready yet)");
+    return Promise.resolve("");
+  }
   return new Promise((resolve) => {
     grecaptcha.ready(() => {
-      grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "booking" }).then(resolve, () => resolve(""));
+      grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "booking" }).then(
+        (token) => {
+          console.log("[recaptcha] token obtained, length:", token.length);
+          resolve(token);
+        },
+        (err) => {
+          console.error("[recaptcha] execute() failed (domain not registered or wrong key type?):", err);
+          resolve("");
+        },
+      );
     });
   });
 }
@@ -95,6 +111,16 @@ export default function BookingForm() {
         />
       )}
       <h3 className="mb-6 font-display text-[18px] font-bold text-dark">Форма запису</h3>
+
+      {/* Honeypot: hidden from humans, bots tend to fill it. Submissions with it set are dropped. */}
+      <input
+        type="text"
+        name="company_website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
 
       <div className="grid gap-3 md:grid-cols-2">
         <div className="flex flex-col gap-1.5">

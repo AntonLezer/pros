@@ -36,11 +36,18 @@ function formatPhone(phone: string): string {
   return `+380 ${national.slice(0, 2)} ${national.slice(2, 5)} ${national.slice(5)}`;
 }
 
+// Accepts a Ukrainian number: 12 digits starting with 380, or 10 digits starting with 0.
+function isValidUaPhone(phone: string): boolean {
+  const digits = digitsOnly(phone);
+  if (digits.length === 12 && digits.startsWith("380")) return true;
+  if (digits.length === 10 && digits.startsWith("0")) return true;
+  return false;
+}
+
 function validate(name: string, phone: string): { name?: string; phone?: string } {
   const errors: { name?: string; phone?: string } = {};
   if (name.trim().length < 2) errors.name = "Введіть ім'я (мін. 2 символи)";
-  const digits = digitsOnly(phone);
-  if (digits.length !== 10 && digits.length !== 12) {
+  if (!isValidUaPhone(phone)) {
     errors.phone = "Введіть телефон (наприклад, 068 000 0000)";
   }
   return errors;
@@ -90,7 +97,10 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
     console.warn("[booking] reCAPTCHA not configured (RECAPTCHA_SECRET_KEY) — skipping verification");
     return true;
   }
-  if (!token) return false;
+  if (!token) {
+    console.warn("[booking] reCAPTCHA: empty token from client (script blocked or execute failed)");
+    return false;
+  }
 
   try {
     const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
@@ -98,8 +108,19 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ secret, response: token, remoteip: ip }),
     });
-    const data = (await res.json()) as { success?: boolean; score?: number };
-    return data.success === true && (data.score ?? 0) >= 0.5;
+    const data = (await res.json()) as {
+      success?: boolean;
+      score?: number;
+      "error-codes"?: string[];
+    };
+    const ok = data.success === true && (data.score ?? 0) >= 0.5;
+    console.log("[booking] reCAPTCHA result:", {
+      ok,
+      success: data.success,
+      score: data.score,
+      errorCodes: data["error-codes"],
+    });
+    return ok;
   } catch (err) {
     console.error("[booking] reCAPTCHA verification failed:", err);
     return false;
@@ -129,6 +150,12 @@ export async function submitBooking(
   const date = String(formData.get("date") ?? "");
   const comment = String(formData.get("comment") ?? "");
   const recaptchaToken = String(formData.get("recaptchaToken") ?? "");
+  const honeypot = String(formData.get("company_website") ?? "");
+
+  // Bots fill the hidden honeypot field; humans never see it. Pretend success, send nothing.
+  if (honeypot.trim()) {
+    return { ok: true };
+  }
 
   const values = { name, phone, service, date, comment };
 
