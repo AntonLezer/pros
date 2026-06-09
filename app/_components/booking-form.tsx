@@ -1,8 +1,32 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Script from "next/script";
 import { submitBooking, type BookingResult } from "../_actions/booking";
 import { services } from "@/data/services";
+
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, opts: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+// Returns a fresh reCAPTCHA v3 token, or "" when reCAPTCHA isn't configured/loaded
+// (the server then skips verification, so the form keeps working in dev).
+function getRecaptchaToken(): Promise<string> {
+  const grecaptcha = window.grecaptcha;
+  if (!RECAPTCHA_SITE_KEY || !grecaptcha) return Promise.resolve("");
+  return new Promise((resolve) => {
+    grecaptcha.ready(() => {
+      grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "booking" }).then(resolve, () => resolve(""));
+    });
+  });
+}
 
 const inputBase =
   "w-full rounded-[10px] border-[1.5px] border-cream-2 bg-cream px-4 py-3.5 text-[14px] text-dark placeholder:text-muted/60 transition-colors focus:border-accent focus:bg-white focus:outline-none";
@@ -27,6 +51,13 @@ export default function BookingForm() {
     null,
   );
   const [phone, setPhone] = useState(PHONE_PREFIX);
+
+  // Fetch a reCAPTCHA token at submit time, inject it, then run the server action.
+  async function actionWithRecaptcha(formData: FormData) {
+    const token = await getRecaptchaToken();
+    formData.set("recaptchaToken", token);
+    await formAction(formData);
+  }
 
   if (state?.ok) {
     return (
@@ -53,10 +84,16 @@ export default function BookingForm() {
 
   return (
     <form
-      action={formAction}
+      action={actionWithRecaptcha}
       noValidate
       className="rounded-[20px] bg-surface p-8 md:p-10"
     >
+      {RECAPTCHA_SITE_KEY && (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+          strategy="lazyOnload"
+        />
+      )}
       <h3 className="mb-6 font-display text-[18px] font-bold text-dark">Форма запису</h3>
 
       <div className="grid gap-3 md:grid-cols-2">

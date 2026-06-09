@@ -83,6 +83,29 @@ async function sendTelegramNotification(text: string): Promise<boolean> {
   return results.some(Boolean);
 }
 
+// Verifies a reCAPTCHA v3 token with Google. Skips (returns true) when no secret is configured.
+async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) {
+    console.warn("[booking] reCAPTCHA not configured (RECAPTCHA_SECRET_KEY) — skipping verification");
+    return true;
+  }
+  if (!token) return false;
+
+  try {
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+    });
+    const data = (await res.json()) as { success?: boolean; score?: number };
+    return data.success === true && (data.score ?? 0) >= 0.5;
+  } catch (err) {
+    console.error("[booking] reCAPTCHA verification failed:", err);
+    return false;
+  }
+}
+
 function isRateLimited(ip: string): boolean {
   if (process.env.NODE_ENV !== "production") return false;
   const now = Date.now();
@@ -105,6 +128,7 @@ export async function submitBooking(
   const service = String(formData.get("service") ?? "");
   const date = String(formData.get("date") ?? "");
   const comment = String(formData.get("comment") ?? "");
+  const recaptchaToken = String(formData.get("recaptchaToken") ?? "");
 
   const values = { name, phone, service, date, comment };
 
@@ -117,6 +141,11 @@ export async function submitBooking(
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip") ?? "unknown";
   if (isRateLimited(ip)) {
     return { ok: false, error: "Забагато спроб. Спробуйте за кілька хвилин.", values };
+  }
+
+  const humanVerified = await verifyRecaptcha(recaptchaToken, ip);
+  if (!humanVerified) {
+    return { ok: false, error: "Не вдалося підтвердити, що ви не робот. Спробуйте ще раз.", values };
   }
 
   console.log("[booking]", {
