@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect, startTransition } from "react";
+import { useActionState, useState, useEffect, useRef, startTransition } from "react";
 import { submitBooking, type BookingResult } from "../_actions/booking";
 import { services } from "@/data/services";
 
@@ -9,53 +9,17 @@ const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 declare global {
   interface Window {
     grecaptcha?: {
-      ready: (cb: () => void) => void;
-      execute: (siteKey: string, opts: { action: string }) => Promise<string>;
+      render: (
+        container: HTMLElement,
+        params: { sitekey: string; callback?: () => void; "expired-callback"?: () => void },
+      ) => number;
+      getResponse: (widgetId?: number) => string;
+      reset: (widgetId?: number) => void;
     };
   }
 }
 
-// Returns a fresh reCAPTCHA v3 token, or "" when reCAPTCHA isn't configured/loaded
-// (the server then skips verification, so the form keeps working in dev).
-// Waits up to ~8s for the (async) reCAPTCHA script to define window.grecaptcha.
-function waitForGrecaptcha(): Promise<Window["grecaptcha"] | undefined> {
-  return new Promise((resolve) => {
-    let elapsed = 0;
-    const tick = () => {
-      if (window.grecaptcha?.execute) return resolve(window.grecaptcha);
-      if (elapsed >= 8000) return resolve(undefined);
-      elapsed += 200;
-      setTimeout(tick, 200);
-    };
-    tick();
-  });
-}
-
-async function getRecaptchaToken(): Promise<string> {
-  if (!RECAPTCHA_SITE_KEY) {
-    console.warn("[recaptcha] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is missing on the client");
-    return "";
-  }
-  const grecaptcha = await waitForGrecaptcha();
-  if (!grecaptcha) {
-    console.warn("[recaptcha] grecaptcha not loaded (script blocked or failed to load)");
-    return "";
-  }
-  return new Promise((resolve) => {
-    grecaptcha.ready(() => {
-      grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "booking" }).then(
-        (token) => {
-          console.log("[recaptcha] token obtained, length:", token.length);
-          resolve(token);
-        },
-        (err) => {
-          console.error("[recaptcha] execute() failed (domain not registered or wrong key type?):", err);
-          resolve("");
-        },
-      );
-    });
-  });
-}
+const RECAPTCHA_SCRIPT_SRC = "https://www.google.com/recaptcha/api.js?render=explicit";
 
 const inputBase =
   "w-full rounded-[10px] border-[1.5px] border-cream-2 bg-cream px-4 py-3.5 text-[14px] text-dark placeholder:text-muted/60 transition-colors focus:border-accent focus:bg-white focus:outline-none";
@@ -80,31 +44,69 @@ export default function BookingForm() {
     null,
   );
   const [phone, setPhone] = useState(PHONE_PREFIX);
-  const [submitting, setSubmitting] = useState(false);
+  const [captchaError, setCaptchaError] = useState<string | undefined>();
+  const captchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<number | null>(null);
 
-  // Load the reCAPTCHA v3 script imperatively so we can log success/failure clearly.
+  // Load the reCAPTCHA v2 script and render the "I'm not a robot" checkbox widget.
   useEffect(() => {
     if (!RECAPTCHA_SITE_KEY) return;
-    if (window.grecaptcha?.execute) return;
-    const src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-    if (document.querySelector(`script[src="${src}"]`)) return;
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = () => console.log("[recaptcha] script loaded");
-    s.onerror = () => console.error("[recaptcha] script FAILED to load — blocked by an extension/DNS or network error");
-    document.head.appendChild(s);
+
+    const render = () => {
+      if (widgetIdRef.current !== null || !captchaRef.current || !window.grecaptcha?.render) return;
+      widgetIdRef.current = window.grecaptcha.render(captchaRef.current, {
+        sitekey: RECAPTCHA_SITE_KEY,
+        callback: () => setCaptchaError(undefined),
+      });
+      console.log("[recaptcha] v2 checkbox rendered");
+    };
+
+    if (window.grecaptcha?.render) {
+      render();
+      return;
+    }
+    if (!document.querySelector(`script[src="${RECAPTCHA_SCRIPT_SRC}"]`)) {
+      const s = document.createElement("script");
+      s.src = RECAPTCHA_SCRIPT_SRC;
+      s.async = true;
+      s.onerror = () => console.error("[recaptcha] script FAILED to load — blocked by an extension/DNS or network error");
+      document.head.appendChild(s);
+    }
+    const iv = setInterval(() => {
+      if (window.grecaptcha?.render) {
+        clearInterval(iv);
+        render();
+      }
+    }, 200);
+    const to = setTimeout(() => clearInterval(iv), 8000);
+    return () => {
+      clearInterval(iv);
+      clearTimeout(to);
+    };
   }, []);
 
-  // Fetch a reCAPTCHA token at submit time, inject it, then run the server action.
-  // The dispatch must run inside startTransition so useActionState's `pending` updates.
-  async function actionWithRecaptcha(formData: FormData) {
-    setSubmitting(true);
-    const token = await getRecaptchaToken();
-    formData.set("recaptchaToken", token);
+  // Read the checkbox response, inject it, then run the server action.
+  // The dispatch runs inside startTransition so useActionState's `pending` updates.
+  function actionWithRecaptcha(formData: FormData) {
+    const widgetId = widgetIdRef.current;
+    if (widgetId !== null && window.grecaptcha) {
+      const token = window.grecaptcha.getResponse(widgetId);
+      if (!token) {
+        setCaptchaError("Підтвердіть, що ви не робот");
+        return;
+      }
+      formData.set("recaptchaToken", token);
+    }
+    setCaptchaError(undefined);
     startTransition(() => formAction(formData));
-    setSubmitting(false);
   }
+
+  // After a server-side rejection, reset the checkbox so its single-use token can be re-issued.
+  useEffect(() => {
+    if (state && !state.ok && widgetIdRef.current !== null) {
+      window.grecaptcha?.reset(widgetIdRef.current);
+    }
+  }, [state]);
 
   if (state?.ok) {
     return (
@@ -245,12 +247,23 @@ export default function BookingForm() {
         </p>
       )}
 
+      {RECAPTCHA_SITE_KEY && (
+        <div className="mt-4">
+          <div ref={captchaRef} />
+          {captchaError && (
+            <p className="mt-2 text-[13px] text-red-600" role="alert">
+              {captchaError}
+            </p>
+          )}
+        </div>
+      )}
+
       <button
         type="submit"
-        disabled={pending || submitting}
+        disabled={pending}
         className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[15px] font-semibold text-white transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.3)] active:scale-[0.97] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
-        {pending || submitting ? "Надсилаємо..." : "Записатись на прийом"}
+        {pending ? "Надсилаємо..." : "Записатись на прийом"}
       </button>
     </form>
   );

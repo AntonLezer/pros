@@ -60,9 +60,7 @@ function escapeHtml(s: string): string {
 // Sends the booking to Telegram. Returns true if at least one recipient received it.
 async function sendTelegramNotification(text: string): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatIds = [601978001]
-
-  //, 1124450777, 8703175598
+  const chatIds = [601978001, 1124450777, 8703175598];
 
   if (!token || chatIds.length === 0) {
     console.warn("[booking] Telegram not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_IDS)");
@@ -92,7 +90,7 @@ async function sendTelegramNotification(text: string): Promise<boolean> {
   return results.some(Boolean);
 }
 
-// Verifies a reCAPTCHA v3 token with Google. Skips (returns true) when no secret is configured.
+// Verifies a reCAPTCHA v2 checkbox token with Google. Skips (returns true) when no secret is configured.
 async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
   const secret = process.env.RECAPTCHA_SECRET_KEY;
   if (!secret) {
@@ -116,18 +114,14 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
     });
     const data = (await res.json()) as {
       success?: boolean;
-      score?: number;
-      action?: string;
       hostname?: string;
       challenge_ts?: string;
       "error-codes"?: string[];
     };
-    const ok = data.success === true && (data.score ?? 0) >= 0.5;
+    const ok = data.success === true;
     console.log("[booking] reCAPTCHA result:", {
       ok,
       success: data.success,
-      score: data.score,
-      action: data.action,
       hostname: data.hostname,
       challengeTs: data.challenge_ts,
       errorCodes: data["error-codes"],
