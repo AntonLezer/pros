@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState, useState, startTransition } from "react";
-import Script from "next/script";
+import { useActionState, useState, useEffect, startTransition } from "react";
 import { submitBooking, type BookingResult } from "../_actions/booking";
 import { services } from "@/data/services";
 
@@ -83,6 +82,20 @@ export default function BookingForm() {
   const [phone, setPhone] = useState(PHONE_PREFIX);
   const [submitting, setSubmitting] = useState(false);
 
+  // Load the reCAPTCHA v3 script imperatively so we can log success/failure clearly.
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY) return;
+    if (window.grecaptcha?.execute) return;
+    const src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    if (document.querySelector(`script[src="${src}"]`)) return;
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    s.onload = () => console.log("[recaptcha] script loaded");
+    s.onerror = () => console.error("[recaptcha] script FAILED to load — blocked by an extension/DNS or network error");
+    document.head.appendChild(s);
+  }, []);
+
   // Fetch a reCAPTCHA token at submit time, inject it, then run the server action.
   // The dispatch must run inside startTransition so useActionState's `pending` updates.
   async function actionWithRecaptcha(formData: FormData) {
@@ -122,12 +135,6 @@ export default function BookingForm() {
       noValidate
       className="rounded-[20px] bg-surface p-8 md:p-10"
     >
-      {RECAPTCHA_SITE_KEY && (
-        <Script
-          src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-          strategy="afterInteractive"
-        />
-      )}
       <h3 className="mb-6 font-display text-[18px] font-bold text-dark">Форма запису</h3>
 
       {/* Honeypot: hidden from humans, bots tend to fill it. Submissions with it set are dropped. */}
