@@ -60,7 +60,9 @@ function escapeHtml(s: string): string {
 // Sends the booking to Telegram. Returns true if at least one recipient received it.
 async function sendTelegramNotification(text: string): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatIds = [601978001, 1124450777, 8703175598]
+  const chatIds = [601978001]
+
+  //, 1124450777, 8703175598
 
   if (!token || chatIds.length === 0) {
     console.warn("[booking] Telegram not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_IDS)");
@@ -98,9 +100,13 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
     return true;
   }
   if (!token) {
-    console.warn("[booking] reCAPTCHA: empty token from client (script blocked or execute failed)");
-    return false;
+    // Script blocked (ad-blocker/extension) or failed to load — don't block a real
+    // patient from booking. Rate-limiting + phone validation remain as backstops.
+    console.warn("[booking] reCAPTCHA: empty token from client — allowing (script blocked or failed to load)");
+    return true;
   }
+
+  console.log("[booking] reCAPTCHA: verifying token", { tokenLength: token.length, ip });
 
   try {
     const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
@@ -111,6 +117,9 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
     const data = (await res.json()) as {
       success?: boolean;
       score?: number;
+      action?: string;
+      hostname?: string;
+      challenge_ts?: string;
       "error-codes"?: string[];
     };
     const ok = data.success === true && (data.score ?? 0) >= 0.5;
@@ -118,6 +127,9 @@ async function verifyRecaptcha(token: string, ip: string): Promise<boolean> {
       ok,
       success: data.success,
       score: data.score,
+      action: data.action,
+      hostname: data.hostname,
+      challengeTs: data.challenge_ts,
       errorCodes: data["error-codes"],
     });
     return ok;

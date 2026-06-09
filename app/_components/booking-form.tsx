@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, startTransition } from "react";
 import Script from "next/script";
 import { submitBooking, type BookingResult } from "../_actions/booking";
 import { services } from "@/data/services";
@@ -18,15 +18,29 @@ declare global {
 
 // Returns a fresh reCAPTCHA v3 token, or "" when reCAPTCHA isn't configured/loaded
 // (the server then skips verification, so the form keeps working in dev).
-function getRecaptchaToken(): Promise<string> {
-  const grecaptcha = window.grecaptcha;
+// Waits up to ~8s for the (async) reCAPTCHA script to define window.grecaptcha.
+function waitForGrecaptcha(): Promise<Window["grecaptcha"] | undefined> {
+  return new Promise((resolve) => {
+    let elapsed = 0;
+    const tick = () => {
+      if (window.grecaptcha?.execute) return resolve(window.grecaptcha);
+      if (elapsed >= 8000) return resolve(undefined);
+      elapsed += 200;
+      setTimeout(tick, 200);
+    };
+    tick();
+  });
+}
+
+async function getRecaptchaToken(): Promise<string> {
   if (!RECAPTCHA_SITE_KEY) {
     console.warn("[recaptcha] NEXT_PUBLIC_RECAPTCHA_SITE_KEY is missing on the client");
-    return Promise.resolve("");
+    return "";
   }
+  const grecaptcha = await waitForGrecaptcha();
   if (!grecaptcha) {
-    console.warn("[recaptcha] grecaptcha not loaded (script blocked or not ready yet)");
-    return Promise.resolve("");
+    console.warn("[recaptcha] grecaptcha not loaded (script blocked or failed to load)");
+    return "";
   }
   return new Promise((resolve) => {
     grecaptcha.ready(() => {
@@ -67,12 +81,16 @@ export default function BookingForm() {
     null,
   );
   const [phone, setPhone] = useState(PHONE_PREFIX);
+  const [submitting, setSubmitting] = useState(false);
 
   // Fetch a reCAPTCHA token at submit time, inject it, then run the server action.
+  // The dispatch must run inside startTransition so useActionState's `pending` updates.
   async function actionWithRecaptcha(formData: FormData) {
+    setSubmitting(true);
     const token = await getRecaptchaToken();
     formData.set("recaptchaToken", token);
-    await formAction(formData);
+    startTransition(() => formAction(formData));
+    setSubmitting(false);
   }
 
   if (state?.ok) {
@@ -107,7 +125,7 @@ export default function BookingForm() {
       {RECAPTCHA_SITE_KEY && (
         <Script
           src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
       )}
       <h3 className="mb-6 font-display text-[18px] font-bold text-dark">Форма запису</h3>
@@ -222,10 +240,10 @@ export default function BookingForm() {
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || submitting}
         className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[15px] font-semibold text-white transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-accent-dark hover:shadow-[0_8px_24px_rgba(224,123,57,0.3)] active:scale-[0.97] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
-        {pending ? "Надсилаємо..." : "Записатись на прийом"}
+        {pending || submitting ? "Надсилаємо..." : "Записатись на прийом"}
       </button>
     </form>
   );
