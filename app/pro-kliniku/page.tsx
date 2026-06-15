@@ -204,7 +204,7 @@ export default function AboutPage() {
               підвищенням кваліфікації. Познайомтеся з нашими стоматологами та зубними техніками.
             </p>
             <Link
-              href="/#doctors"
+              href="/komanda"
               className="mt-6 inline-flex h-12 items-center justify-center rounded-full border-2 border-cream-2 bg-cream px-7 text-[15px] font-semibold text-dark transition-[transform,background-color,border-color] duration-200 ease-out hover:border-accent hover:bg-accent hover:text-white active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               Наші лікарі

@@ -1,3 +1,5 @@
+export type DoctorRole = "doctor" | "technician" | "admin";
+
 export type Doctor = {
   id: string;
   name: string;
@@ -5,6 +7,14 @@ export type Doctor = {
   experienceYears?: number | string;
   initials: string;
   image?: string;
+  // --- Team page (/komanda) fields. All optional; the home Doctors section ignores them.
+  // TODO (потрібні реальні дані від клініки): заповнити bio / education / certificates / focusAreas
+  // для кожного спеціаліста. До заповнення відповідні блоки на сторінці /komanda не відображаються.
+  role?: DoctorRole;
+  bio?: string;
+  education?: string[];
+  certificates?: string[];
+  focusAreas?: string[];
 };
 
 export const doctors: Doctor[] = [
@@ -15,6 +25,7 @@ export const doctors: Doctor[] = [
     //experienceYears: 5,
     initials: "ІП",
     image: "/images/doctors/IMG_9420.jpg",
+    role: "admin",
   },
   {
     id: "chief-technician",
@@ -23,7 +34,8 @@ export const doctors: Doctor[] = [
     experienceYears: 38,
     initials: "ІП",
     image: "/images/doctors/IMG_9049.jpg",
-  },  
+    role: "technician",
+  },
   {
     id: "ploskyriv",
     name: "Вадим Олександрович",
@@ -31,6 +43,7 @@ export const doctors: Doctor[] = [
     experienceYears: "10+",
     initials: "ІП",
     image: "/images/doctors/IMG_8994.jpg",
+    role: "doctor",
   },
   {
     id: "kovalchuk",
@@ -39,6 +52,7 @@ export const doctors: Doctor[] = [
     experienceYears: "8+",
     initials: "ОК",
     image: "/images/doctors/IMG_8982.jpg",
+    role: "doctor",
   },
   {
     id: "melnyk",
@@ -47,6 +61,7 @@ export const doctors: Doctor[] = [
     experienceYears: "12+",
     initials: "ЮМ",
     image: "/images/doctors/IMG_9027.jpg",
+    role: "doctor",
   },
   {
     id: "technician",
@@ -55,5 +70,6 @@ export const doctors: Doctor[] = [
     experienceYears: 20,
     initials: "ІП",
     image: "/images/doctors/IMG_9050.jpg",
+    role: "technician",
   },
 ];

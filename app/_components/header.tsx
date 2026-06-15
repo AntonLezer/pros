@@ -12,7 +12,7 @@ const DRAWER_ITEMS = [
   { href: "/#services", label: "Послуги" },
   { href: "/tsiny", label: "Ціни" },
   { href: "/#before-after", label: "До/Після" },
-  { href: "/#doctors", label: "Лікарі" },
+  { href: "/komanda", label: "Лікарі" },
   { href: "/#reviews", label: "Відгуки" },
   { href: "/pro-kliniku", label: "Про клініку" },
   { href: "/#contacts", label: "Контакти" },
