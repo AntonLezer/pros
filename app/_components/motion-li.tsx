@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 export default function MotionLi({
@@ -12,17 +12,37 @@ export default function MotionLi({
   className?: string;
   index?: number;
 }) {
-  const reduce = useReducedMotion();
-  if (reduce) return <li className={className}>{children}</li>;
+  const ref = useRef<HTMLLIElement>(null);
+  // Visible by default (SSR/no-JS). Armed only after mount so the hidden start
+  // state never affects FCP/LCP or hurts crawlers.
+  const [armed, setArmed] = useState(false);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setArmed(true);
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const cls = [className, armed && "motion-inview", armed && shown && "is-visible"]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <motion.li
-      className={className}
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
-    >
+    <li ref={ref} className={cls} style={index ? { transitionDelay: `${index * 0.05}s` } : undefined}>
       {children}
-    </motion.li>
+    </li>
   );
 }

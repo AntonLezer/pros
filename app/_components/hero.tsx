@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Phone } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 import { contacts } from "@/data/contacts";
 
 type Slide = {
@@ -162,27 +161,19 @@ export default function Hero() {
                 aria-live="polite"
                 className="min-h-[230px] md:min-h-[330px]"
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={active}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                <div key={active} className="hero-text-in">
+                  <h1
+                    id="hero-h1"
+                    className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-[52px] md:leading-[1.05]"
                   >
-                    <h1
-                      id="hero-h1"
-                      className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-[52px] md:leading-[1.05]"
-                    >
-                      {before}
-                      <em className="not-italic text-accent-light">{accentText}</em>
-                      {after}
-                    </h1>
-                    <p className="mt-5 max-w-md text-base leading-relaxed text-white/85 md:text-[17px]">
-                      {current.paragraph}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+                    {before}
+                    <em className="not-italic text-accent-light">{accentText}</em>
+                    {after}
+                  </h1>
+                  <p className="mt-5 max-w-md text-base leading-relaxed text-white/85 md:text-[17px]">
+                    {current.paragraph}
+                  </p>
+                </div>
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
