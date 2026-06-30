@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    qualities: [75,80, 90],
+    qualities: [75, 80, 90],
     remotePatterns: [
       {
         protocol: "https",
@@ -20,6 +20,15 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/about-us",
+        destination: "/pro-kliniku",
+        permanent: true,
+      },
+    ];
   },
 };
 

@@ -48,6 +48,10 @@ export default function Contacts() {
         >
           Контакти
         </h2>
+        <p className="mt-4 max-w-[560px] text-[16px] leading-relaxed text-muted">
+          Стоматологія Хмельницький — вул. Бажана, 19, р-н Заготзерно. Зручне розташування для
+          мешканців району: стоматолог поруч, без довгих поїздок по місту.
+        </p>
 
         <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
           <div className="flex flex-col gap-6">

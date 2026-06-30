@@ -16,7 +16,9 @@ export default function Doctors() {
           Люди, які стоять за вашою здоровою усмішкою
         </h2>
         <p className="mt-4 max-w-[560px] text-[16px] leading-relaxed text-muted">
-          Кожен спеціаліст — сертифікований фахівець із постійним підвищенням кваліфікації.
+          Кожен спеціаліст приватної стоматологічної клініки у Хмельницькому — сертифікований
+          фахівець з імплантацією, брекетами та лікуванням зубів. Стоматолог поруч — на вул. Бажана,
+          р-н Заготзерно.
         </p>
 
         <ul className="mt-12 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 md:grid-cols-3">

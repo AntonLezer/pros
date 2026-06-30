@@ -9,7 +9,7 @@ import { contacts } from "@/data/contacts";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const DRAWER_ITEMS = [
-  { href: "/#services", label: "Послуги" },
+  { href: "/poslugy", label: "Послуги" },
   { href: "/tsiny", label: "Ціни" },
   { href: "/#before-after", label: "До/Після" },
   { href: "/komanda", label: "Лікарі" },

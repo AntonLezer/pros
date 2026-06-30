@@ -21,7 +21,7 @@ const SLIDES: Slide[] = [
     title: "Ваша здорова посмішка — наша турбота",
     accent: "здорова",
     paragraph:
-      "Сучасна стоматологія з індивідуальним підходом. Лікуємо без болю, працюємо з любов'ю до кожного пацієнта.",
+      "Приватна стоматологія у Хмельницькому з індивідуальним підходом. Лікування зубів без болю — від професійної чистки до імплантації.",
   },
   {
     src: "/images/banner/IMG_9507.jpg",
@@ -29,7 +29,7 @@ const SLIDES: Slide[] = [
     title: "Лікуємо без болю — спокійно і впевнено",
     accent: "без болю",
     paragraph:
-      "Делікатна анестезія, сучасні протоколи та уважні лікарі. Ваш комфорт — наш стандарт від першого візиту.",
+      "Стоматологічна клініка на вул. Бажана: делікатна анестезія, сучасні протоколи та уважні лікарі. Ваш комфорт — наш стандарт.",
   },
   {
     src: "/images/banner/IMG_9320.jpg",
@@ -37,7 +37,7 @@ const SLIDES: Slide[] = [
     title: "Точна діагностика із сучасним обладнанням",
     accent: "Точна",
     paragraph:
-      "Цифровий рентген, інтраоральна камера та мікроскоп. Бачимо більше — лікуємо точніше та зберігаємо ваші зуби.",
+      "Цифровий рентген, інтраоральна камера та мікроскоп. Бачимо більше — лікуємо точніше, зберігаємо зуби та пропонуємо відбілювання.",
   },
   {
     src: "/images/banner/IMG_9390.jpg",
@@ -45,7 +45,7 @@ const SLIDES: Slide[] = [
     title: "Команда, якій довіряєш свою посмішку",
     accent: "довіряєш",
     paragraph:
-      "Досвідчені стоматологи з постійною практикою у Хмельницькому. Працюємо так, як лікували б рідних.",
+      "Стоматолог поруч у районі Заготзерно — досвідчені лікарі з брекетами, імплантацією та дитячою стоматологією.",
   },
 ];
 
@@ -67,8 +67,6 @@ export default function Hero() {
   const [mountRest, setMountRest] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
-  // Render only the LCP slide on first paint; mount the rest once the browser
-  // is idle so they don't compete for bandwidth with the priority hero image.
   useEffect(() => {
     const ric = window.requestIdleCallback;
     if (ric) {
@@ -157,19 +155,24 @@ export default function Hero() {
                 Хмельницький · Стоматологія
               </span>
 
+              <h1
+                id="hero-h1"
+                className="mt-6 font-display text-[clamp(26px,5vw,44px)] font-bold leading-[1.1] tracking-tight text-white md:text-[46px] md:leading-[1.05] opacity-0 absolute top-0 left-0"
+              >
+                Стоматологічний центр «ПЛОСКИРІВ» у Хмельницькому
+              </h1>
+
               <div
                 aria-live="polite"
-                className="min-h-[230px] md:min-h-[330px]"
+                aria-atomic="true"
+                className="min-h-[180px] md:min-h-[220px]"
               >
                 <div key={active} className="hero-text-in">
-                  <h1
-                    id="hero-h1"
-                    className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-[52px] md:leading-[1.05]"
-                  >
+                  <h2 className="mt-4 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-[52px] md:leading-[1.05]">
                     {before}
                     <em className="not-italic text-accent-light">{accentText}</em>
                     {after}
-                  </h1>
+                  </h2>
                   <p className="mt-5 max-w-md text-base leading-relaxed text-white/85 md:text-[17px]">
                     {current.paragraph}
                   </p>

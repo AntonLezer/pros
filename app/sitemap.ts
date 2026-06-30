@@ -32,16 +32,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${SITE_URL}/poslugy`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: `${SITE_URL}/komanda`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${SITE_URL}/about-us`,
+      url: `${SITE_URL}/stomatologiya-khmelnytskyy`,
       lastModified,
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.75,
     },
     ...servicePages,
   ];
