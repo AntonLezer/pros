@@ -33,6 +33,7 @@ function TelegramIcon({ className }: { className?: string }) {
 
 const FOOTER_LINKS = [
   { href: "/poslugy", label: "Послуги" },
+  { href: "/blog", label: "Блог" },
   { href: "/tsiny", label: "Ціни" },
   { href: "/pro-kliniku", label: "Про клініку" },
   { href: "/komanda", label: "Лікарі" },

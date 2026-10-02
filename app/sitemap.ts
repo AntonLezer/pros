@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/data/blog";
 import { services } from "@/data/services";
 
 const SITE_URL = "https://www.mnvcploskiriv.com.ua";
@@ -10,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
     changeFrequency: "monthly",
     priority: 0.85,
+  }));
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: new Date(`${post.publishedAt}T00:00:00`),
+    changeFrequency: "monthly",
+    priority: 0.65,
   }));
 
   return [
@@ -38,6 +45,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${SITE_URL}/blog`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
       url: `${SITE_URL}/komanda`,
       lastModified,
       changeFrequency: "monthly",
@@ -50,5 +63,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
     },
     ...servicePages,
+    ...blogPages,
   ];
 }

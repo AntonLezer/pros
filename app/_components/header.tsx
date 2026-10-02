@@ -10,6 +10,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const DRAWER_ITEMS = [
   { href: "/poslugy", label: "Послуги" },
+  { href: "/blog", label: "Блог" },
   { href: "/tsiny", label: "Ціни" },
   { href: "/#before-after", label: "До/Після" },
   { href: "/komanda", label: "Лікарі" },
