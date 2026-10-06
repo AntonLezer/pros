@@ -130,13 +130,13 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           />
         </div>
 
-        <div className="mt-8 space-y-5 text-[16px] leading-[1.8] text-text">
+        <div className="mt-8 space-y-5 text-[17px] leading-[1.85] text-text md:text-[18px]">
           {post.content.map((block, index) => {
             if (block.type === "heading") {
               return (
                 <h2
                   key={`${block.type}-${index}`}
-                  className="pt-3 font-display text-[22px] font-semibold leading-snug text-dark"
+                  className="pt-3 font-display text-[24px] font-semibold leading-snug text-dark"
                 >
                   {block.text}
                 </h2>
