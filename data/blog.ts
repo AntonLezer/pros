@@ -15,6 +15,7 @@ export type BlogPost = {
   readTime: string;
   image: string;
   imageAlt: string;
+  relatedServiceSlug: string;
   metaTitle: string;
   metaDescription: string;
   content: BlogBlock[];

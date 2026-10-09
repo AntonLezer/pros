@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Clock3 } from "lucide-react";
 import { blogPosts, formatBlogDate, getBlogPost } from "@/data/blog";
+import { services } from "@/data/services";
 
 const SITE_URL = "https://www.mnvcploskiriv.com.ua";
 type Params = { slug: string };
@@ -40,7 +41,7 @@ export async function generateMetadata(
       title: post.metaTitle,
       description: post.metaDescription,
       images: [{ url: post.image, width: 1200, height: 750, alt: post.imageAlt }],
-      publishedTime: new Date(`${post.publishedAt}T00:00:00`).toISOString(),
+      publishedTime: new Date(`${post.publishedAt}T00:00:00Z`).toISOString(),
     },
     twitter: {
       card: "summary_large_image",
@@ -55,6 +56,10 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   const { slug } = await params;
   const post = getBlogPost(slug);
   if (!post) notFound();
+  const relatedService = services.find((service) => service.slug === post.relatedServiceSlug);
+  if (!relatedService) {
+    throw new Error(`Blog post "${post.slug}" references an unknown service.`);
+  }
 
   const url = `${SITE_URL}/blog/${post.slug}`;
   const articleSchema = {
@@ -63,7 +68,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     headline: post.title,
     description: post.metaDescription,
     image: `${SITE_URL}${post.image}`,
-    datePublished: new Date(`${post.publishedAt}T00:00:00`).toISOString(),
+    datePublished: new Date(`${post.publishedAt}T00:00:00Z`).toISOString(),
     author: { "@type": "Organization", name: "Центр Плоскирів", url: SITE_URL },
     publisher: { "@type": "Organization", name: "Центр Плоскирів", url: SITE_URL },
     mainEntityOfPage: url,
@@ -173,6 +178,16 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             return <p key={`${block.type}-${index}`}>{block.text}</p>;
           })}
         </div>
+
+        <aside className="mt-8 rounded-2xl border border-cream-2 bg-surface p-5">
+          <p className="text-[14px] text-muted">Пов’язана послуга</p>
+          <Link
+            href={`/poslugy/${relatedService.slug}`}
+            className="mt-1 inline-flex text-[16px] font-semibold text-accent transition-colors hover:text-accent-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            {relatedService.shortName} у Хмельницькому
+          </Link>
+        </aside>
 
         <Link
           href="/blog"
