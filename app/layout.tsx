@@ -5,6 +5,7 @@ import Header from "./_components/header";
 import Footer from "./_components/footer";
 import DentistJsonLd from "./_components/structured-data/dentist-json-ld";
 import JsonLd from "./_components/structured-data/json-ld";
+import { contacts } from "@/data/contacts";
 import { buildFaqSchema, buildWebsiteSchema } from "@/lib/schema/dentist-schema";
 
 const unbounded = Unbounded({
@@ -26,7 +27,8 @@ const SITE_NAME = "Центр Плоскирів";
 const CITY = "Хмельницький";
 const TITLE = `Стоматологія у Хмельницькому — ${SITE_NAME}: лікування, імплантація, брекети`;
 const DESCRIPTION =
-  "Стоматологічна клініка «Центр Плоскирів» у Хмельницькому: терапевтичне лікування, імплантація, брекети, відбілювання, дитяча стоматологія. Запис на консультацію за телефоном.";
+  `Стоматологія «${SITE_NAME}» у місті ${CITY}. Адреса: ${contacts.address.line2}. Телефон: ${contacts.phone}. ` +
+  "Лікування зубів, брекети, імплантація та дитяча стоматологія.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
