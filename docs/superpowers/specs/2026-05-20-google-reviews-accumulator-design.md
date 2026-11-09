@@ -16,7 +16,9 @@ Accumulate Google reviews into a local JSON file in the repo. Each refresh pulls
 - Removing reviews automatically when an author deletes them on Google. (Stored reviews persist; manual pruning only.)
 - Any admin UI, moderation, or per-review hide flag.
 - Any external storage (DB, KV, Blob). JSON in the repo only.
-- Any automated CI/cron. Refresh is run manually from the developer's machine.
+- Any automated CI/cron. Refresh is run manually from the developer's machine. SS
+
+
 
 ## Architecture
 
