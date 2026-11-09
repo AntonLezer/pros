@@ -59,16 +59,16 @@ export default function Footer() {
             style={{ width: 32, height: 32 }}
           />
           <span className="flex flex-col leading-[1.1]">
-            <span className="text-[10px] font-medium text-white/45">
+            <span className="text-[10px] font-medium text-white/75">
               медичний науково-виробничий
             </span>
-            <span className="text-[16px] font-bold tracking-[-0.5px] text-accent">
+            <span className="text-[16px] font-bold tracking-[-0.5px] text-accent-light">
               центр «ПЛОСКИРІВ»
             </span>
           </span>
         </Link>
 
-        <p className="text-[13px] text-white/35">
+        <p className="text-[13px] text-white/70">
           © {new Date().getFullYear()} Стоматологія Плоскирів · Хмельницький
         </p>
 
@@ -81,7 +81,7 @@ export default function Footer() {
                   href={l.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[13px] text-white/45 transition-colors hover:text-accent"
+                  className="text-[13px] text-white/75 transition-colors hover:text-accent-light"
                 >
                   {l.label}
                 </a>
@@ -89,7 +89,7 @@ export default function Footer() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-[13px] text-white/45 transition-colors hover:text-accent"
+                  className="text-[13px] text-white/75 transition-colors hover:text-accent-light"
                 >
                   {l.label}
                 </Link>
