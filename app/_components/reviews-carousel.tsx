@@ -111,8 +111,8 @@ export default function ReviewsCarousel({ reviews }: { reviews: DisplayReview[] 
             >
               <div
                 className="mb-4 flex gap-1 text-[#F5A623]"
-                aria-label={`Оцінка ${r.rating} з 5`}
               >
+                <span className="sr-only">Оцінка {r.rating} з 5</span>
                 {Array.from({ length: r.rating }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} aria-hidden="true" />
                 ))}

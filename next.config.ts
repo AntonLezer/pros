@@ -28,6 +28,16 @@ const nextConfig: NextConfig = {
         destination: "/pro-kliniku",
         permanent: true,
       },
+      {
+        source: "/aesthetic-dentistry",
+        destination: "/poslugy/estetychna-stomatologiya",
+        permanent: true,
+      },
+      {
+        source: "/prosthetics",
+        destination: "/poslugy/protezuvannya-zubiv",
+        permanent: true,
+      },
     ];
   },
 };

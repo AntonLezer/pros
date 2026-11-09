@@ -3,10 +3,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-
-const VIDEO_SRC =
-  "https://6pzshka9v5rmnwez.public.blob.vercel-storage.com/presentation.mp4";
+import { clinicVideo } from "@/data/video";
 
 export default function Video() {
   const [open, setOpen] = useState(false);
@@ -91,9 +90,9 @@ export default function Video() {
                 <div className="aspect-video w-full overflow-hidden rounded-[20px] bg-black shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
                   {open && (
                     <video
-                      src={VIDEO_SRC}
-                      poster="/images/banner/IMG_9318.jpg"
-                      title="Відеоогляд стоматології Плоскирів"
+                      src={clinicVideo.contentUrl}
+                      poster={clinicVideo.thumbnailUrl}
+                      title={clinicVideo.title}
                       controls
                       autoPlay
                       playsInline
@@ -105,6 +104,13 @@ export default function Video() {
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
+
+          <Link
+            href="/video-ohlyad-kliniky"
+            className="mt-5 inline-flex text-sm font-semibold text-accent underline underline-offset-4"
+          >
+            Відкрити окрему сторінку відеоогляду
+          </Link>
 
           <p className="mt-6 text-[15px] leading-relaxed text-muted">
             Стоматологія Плоскирів — місце, де про вас дбають. Хмельницький, вул. Бажана, 19, р-н Заготзерно

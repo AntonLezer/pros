@@ -53,6 +53,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.75,
     },
+    {
+      url: `${SITE_URL}/video-ohlyad-kliniky`,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
     ...servicePages,
     ...blogPages,
   ];
