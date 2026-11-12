@@ -179,6 +179,11 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           })}
         </div>
 
+        <p className="mt-6 text-[14px] leading-relaxed text-muted">
+          Матеріал має інформаційний характер і не замінює огляд та індивідуальні рекомендації
+          стоматолога.
+        </p>
+
         <aside className="mt-8 rounded-2xl border border-cream-2 bg-surface p-5">
           <p className="text-[14px] text-muted">Пов’язана послуга</p>
           <Link

@@ -190,6 +190,33 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         </div>
       </section>
 
+      {service.id === "pediatric" && (
+        <section
+          aria-labelledby="pediatric-visit-h2"
+          className="border-t border-cream-2 bg-surface py-12 md:py-16"
+        >
+          <div className="mx-auto max-w-[800px] px-5 md:px-8">
+            <h2
+              id="pediatric-visit-h2"
+              className="font-display text-[clamp(20px,2.4vw,30px)] font-bold leading-tight tracking-tight text-dark"
+            >
+              Як підготувати дитину до першого візиту
+            </h2>
+            <p className="mt-4 text-[15px] leading-relaxed text-muted">
+              Розкажіть дитині простими словами, що лікар подивиться на зуби, і оберіть час,
+              коли вона зазвичай відпочила. Більше порад зібрали у статті{" "}
+              <Link
+                href="/blog/pershyy-vizyt-dytyny-do-stomatologa"
+                className="font-semibold text-accent hover:text-accent-dark"
+              >
+                про перший візит дитини до стоматолога
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      )}
+
       <section
         aria-labelledby="other-services-h2"
         className="border-t border-cream-2 bg-surface py-14 md:py-20"
@@ -238,8 +265,8 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             Часті питання
           </h2>
           <dl className="mt-8 divide-y divide-cream-2">
-            {faqItems.map((q) => (
-              <div key={q.id} className="py-5">
+            {(service.faqs ?? faqItems).map((q) => (
+              <div key={q.question} className="py-5">
                 <dt className="font-display text-[16px] font-semibold leading-snug text-dark">
                   {q.question}
                 </dt>

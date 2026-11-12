@@ -102,12 +102,42 @@ export default function PoslugyIndexPage() {
           ))}
         </ul>
 
-        <Link
-          href="/tsiny"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full border-2 border-cream-2 bg-surface px-7 text-[15px] font-semibold text-dark transition-[transform,background-color,border-color] duration-200 ease-out hover:border-accent hover:bg-accent hover:text-white active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        <section
+          aria-labelledby="service-guide-h2"
+          className="mt-12 grid gap-6 rounded-[20px] bg-surface p-6 md:grid-cols-2 md:gap-10 md:p-8"
         >
-          Повний прайс-лист
-        </Link>
+          <div>
+            <h2
+              id="service-guide-h2"
+              className="font-display text-[20px] font-semibold leading-snug text-dark"
+            >
+              Як зорієнтуватися у вартості
+            </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-muted">
+              У картках вказана початкова ціна послуги. Підсумкова вартість залежить від
+              клінічної ситуації та узгодженого плану лікування. Перегляньте актуальний{" "}
+              <Link href="/tsiny" className="font-semibold text-accent hover:text-accent-dark">
+                прайс-лист стоматології
+              </Link>
+              .
+            </p>
+          </div>
+          <div>
+            <h2 className="font-display text-[20px] font-semibold leading-snug text-dark">
+              Не впевнені, до кого записатися?
+            </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-muted">
+              Опишіть своє питання під час запису — адміністратор допоможе зорієнтуватися,
+              а лікар визначить потрібний обсяг огляду та можливі наступні кроки.
+            </p>
+            <Link
+              href="/#booking"
+              className="mt-5 inline-flex h-12 items-center justify-center rounded-full border-2 border-cream-2 px-6 text-[14px] font-semibold text-dark transition-colors hover:border-accent hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              Записатися на консультацію
+            </Link>
+          </div>
+        </section>
       </section>
     </article>
   );
